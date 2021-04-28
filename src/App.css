@@ -51,11 +51,18 @@
   top: 10px;
 }
 
-.antarmuka-admin {
+div.antarmuka-admin {
   margin: 25px;
+  padding: 0px;
 }
 
-.sidebar {
+div.antarmuka-admin-card {
+  margin: 10px;
+  padding: 0px;
+  box-shadow: 5px 5px 10px grey;
+}
+
+div.sidebar {
   background-image: linear-gradient(to bottom right, #1098f7, #40acfa);
   height: 100vh;
 }

@@ -34,7 +34,7 @@ function App() {
           <Col md={1} className='sidebar'>
             <Sidebar/>
           </Col>
-          <Col>
+          <Col className='antarmuka-admin'>
             <BeritaList berita={berita}></BeritaList>
           </Col>
         </Row>
