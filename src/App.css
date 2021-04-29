@@ -59,7 +59,6 @@ div.antarmuka-admin {
 div.antarmuka-admin-card {
   margin: 10px;
   padding: 0px;
-  box-shadow: 5px 5px 10px grey;
 }
 
 div.sidebar {
@@ -74,4 +73,9 @@ div.sidebar {
 
 .center-text {
   text-align: center;
+}
+
+.divider {
+  border-top: 1px solid #6cc2ff;
+  margin: 10px;
 }

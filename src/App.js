@@ -1,25 +1,39 @@
 import './App.css';
 import { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import BeritaList from './components/dash_admin';
+import DashAdmin from './components/dash_admin';
 import Header from './components/header';
 import Sidebar from './components/sidebar';
+import API from './api_service';
 
 function App() {
 
-  const [berita, setBerita] = useState([]);
+  const [ berita, setBerita ] = useState([]);
+  const [ jumlahPelatih, setJumlahPelatih ] = useState([]);
+  const [ jumlahSiswa, setJumlahSiswa ] = useState([]);
+  const [ jumlahPesanan, setJumlahPesanan ] = useState([]);
 
   useEffect( () => {
-    fetch('http://127.0.0.1:8000/api/berita/', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Token fb5ec5875f75a4cb52f2a523a2f3be5c4451421d'
-      },
-    })
+    API.updateBerita()
     .then( resp => resp.json())
     .then( resp => setBerita(resp))
-    .catch( error => console.log(error))
+    .catch( error => console.log(error));
+
+    API.updatePelatih()
+    .then( resp => resp.json())
+    .then( resp => setJumlahPelatih(resp))
+    .catch( error => console.log(error));
+
+    API.updateSiswa()
+    .then( resp => resp.json())
+    .then( resp => setJumlahSiswa(resp))
+    .catch( error => console.log(error));
+
+    API.updatePesanan()
+    .then( resp => resp.json())
+    .then( resp => setJumlahPesanan(resp))
+    .catch( error => console.log(error));
+
   }, []);
 
   return (
@@ -35,7 +49,12 @@ function App() {
             <Sidebar/>
           </Col>
           <Col className='antarmuka-admin'>
-            <BeritaList berita={berita}></BeritaList>
+            <DashAdmin
+              berita={berita}
+              jumlahPelatih={jumlahPelatih}
+              jumlahSiswa={jumlahSiswa}
+              jumlahPesanan={jumlahPesanan}
+            />
           </Col>
         </Row>
 

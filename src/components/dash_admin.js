@@ -2,11 +2,10 @@ import React from 'react';
 import Table from 'react-bootstrap/Table';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import '../App.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faUserAstronaut, faUser, faFileInvoiceDollar, faComments } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserAstronaut, faUser, faFileInvoiceDollar, faComments } from '@fortawesome/free-solid-svg-icons';
 
-function BeritaList(props){
-
+function DashAdmin(props){
   return (
     <div>
 
@@ -47,31 +46,52 @@ function BeritaList(props){
                 <Col className='antarmuka-admin-card'>
                     <Card bg='primary' text='white'>
                         <Card.Header as="h5">
-                            <FontAwesomeIcon icon={faUserAstronaut}/> Jumlah Pelatih
+                            <Row>
+                                <Col>
+                                    <FontAwesomeIcon icon={faUserAstronaut}/> Jumlah Pelatih
+                                </Col>
+                                <Col xs={3}>
+                                    {props.jumlahPelatih ? 
+                                        <strong>{props.jumlahPelatih.length}</strong> :
+                                        <strong>0</strong>
+                                    }
+                                </Col>
+                            </Row>
                         </Card.Header>
-                        <Card.Body>
-                            <Card.Text>check card 1</Card.Text>
-                        </Card.Body>
                     </Card>
                 </Col>
                 <Col className='antarmuka-admin-card'>
                     <Card bg='info' text='white'>
                         <Card.Header as="h5">
-                            <FontAwesomeIcon icon={faUser}/> Jumlah Siswa
+                            <Row>
+                                <Col>
+                                    <FontAwesomeIcon icon={faUser}/> Jumlah Siswa
+                                </Col>
+                                <Col xs={3}>
+                                    {props.jumlahSiswa ? 
+                                        <strong>{props.jumlahSiswa.length}</strong> :
+                                        <strong>0</strong>
+                                    }
+                                </Col>
+                            </Row>
                         </Card.Header>
-                        <Card.Body>
-                            <Card.Text>check card 2</Card.Text>
-                        </Card.Body>
                     </Card>
                 </Col>
                 <Col className='antarmuka-admin-card'>
                     <Card bg='success' text='white'>
                         <Card.Header as="h5">
-                            <FontAwesomeIcon icon={faFileInvoiceDollar}/> Pesanan Aktif
+                            <Row>
+                                <Col>
+                                    <FontAwesomeIcon icon={faFileInvoiceDollar}/> Pesanan Aktif
+                                </Col>
+                                <Col xs={3}>
+                                    {props.jumlahPesanan ? 
+                                        <strong>{props.jumlahPesanan.length}</strong> :
+                                        <strong>0</strong>
+                                    }
+                                </Col>
+                            </Row>
                         </Card.Header>
-                        <Card.Body>
-                            <Card.Text>check card 2</Card.Text>
-                        </Card.Body>
                     </Card>
                 </Col>
             </Row>
@@ -83,4 +103,4 @@ function BeritaList(props){
   )
 }
 
-export default BeritaList;
+export default DashAdmin;

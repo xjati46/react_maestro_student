@@ -1,6 +1,6 @@
 import { Navbar, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faUserAstronaut, faUser, faFileInvoiceDollar } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faUserAstronaut, faUser, faFileInvoiceDollar, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import React from 'react';
 
 function Sidebar() {
@@ -24,6 +24,11 @@ function Sidebar() {
                 <Nav.Link href="#">
                     <FontAwesomeIcon icon={faFileInvoiceDollar} size='2x'/>
                     Pesanan
+                </Nav.Link>
+                <div className='divider'></div>
+                <Nav.Link href="#">
+                    <FontAwesomeIcon icon={faSignOutAlt} size='2x'/>
+                    Keluar
                 </Nav.Link>
             </Nav>
         </Navbar>
