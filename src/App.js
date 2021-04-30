@@ -5,6 +5,10 @@ import DashAdmin from './components/dash_admin';
 import Header from './components/header';
 import Sidebar from './components/sidebar';
 import API from './api_service';
+import { Route, HashRouter } from "react-router-dom";
+import PelatihAdmin from './components/pelatih_admin';
+import SiswaAdmin from './components/siswa_admin';
+import PesananAdmin from './components/pesanan_admin';
 
 function App() {
 
@@ -37,29 +41,43 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <Container fluid >
-        <Row>
-          <Col className='header'>
-            <Header />
-          </Col>
-        </Row>
-        <Row>
-          <Col md={1} className='sidebar'>
-            <Sidebar/>
-          </Col>
-          <Col className='antarmuka-admin'>
-            <DashAdmin
-              berita={berita}
-              jumlahPelatih={jumlahPelatih}
-              jumlahSiswa={jumlahSiswa}
-              jumlahPesanan={jumlahPesanan}
-            />
-          </Col>
-        </Row>
+    <HashRouter>
+      <div>
+        <Container fluid >
+          <Row>
+            <Col className='header'>
+              <Header />
+            </Col>
+          </Row>
+          <Row>
+            <Col md={1} className='sidebar'>
+              <Sidebar/>
+            </Col>
+            <Col className='antarmuka-admin'>
+              <Route exact path="/" component={DashAdmin}>
+                <DashAdmin
+                berita={berita}
+                jumlahPelatih={jumlahPelatih}
+                jumlahSiswa={jumlahSiswa}
+                jumlahPesanan={jumlahPesanan}
+                />
+              </Route>
+              <Route path="/pelatih" component={PelatihAdmin}>
+                <PelatihAdmin/>
+              </Route>
+              <Route path="/siswa" component={SiswaAdmin}>
+                <SiswaAdmin/>
+              </Route>
+              <Route path="/pesanan" component={PesananAdmin}>
+                <PesananAdmin/>
+              </Route>
+              
+            </Col>
+          </Row>
 
-      </Container>
-    </div>
+        </Container>
+      </div>
+    </HashRouter>
   );
 }
 

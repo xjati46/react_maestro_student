@@ -79,3 +79,18 @@ div.sidebar {
   border-top: 1px solid #6cc2ff;
   margin: 10px;
 }
+
+.navbar-dark .navbar-nav a {
+  color: rgba(255,255,255,.5);
+  text-decoration: none;
+}
+
+.navbar-dark .navbar-nav a:hover {
+  color: rgba(255,255,255,.75);
+  text-decoration: none;
+}
+
+.navbar-dark .navbar-nav a .active {
+  color: white;
+  text-decoration: none;
+}

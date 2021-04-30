@@ -1,6 +1,3 @@
-// import Navbar from 'react-bootstrap/Navbar';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faSwimmer } from '@fortawesome/free-solid-svg-icons'
 import React from 'react';
 
 function PelatihAdmin() {
