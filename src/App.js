@@ -16,6 +16,9 @@ function App() {
   const [ jumlahPelatih, setJumlahPelatih ] = useState([]);
   const [ jumlahSiswa, setJumlahSiswa ] = useState([]);
   const [ jumlahPesanan, setJumlahPesanan ] = useState([]);
+  const [ pelatih, setPelatih ] = useState([]);
+  const [ siswa, setSiswa ] = useState([]);
+  const [ pesanan, setPesanan ] = useState([]);
 
   useEffect( () => {
     API.updateBerita()
@@ -38,6 +41,21 @@ function App() {
     .then( resp => setJumlahPesanan(resp))
     .catch( error => console.log(error));
 
+    API.daftarPelatih()
+    .then( resp => resp.json())
+    .then( resp => setPelatih(resp))
+    .catch( error => console.log(error));
+
+    API.daftarSiswa()
+    .then( resp => resp.json())
+    .then( resp => setSiswa(resp))
+    .catch( error => console.log(error));
+    
+    API.daftarPesanan()
+    .then( resp => resp.json())
+    .then( resp => setPesanan(resp))
+    .catch( error => console.log(error));
+
   }, []);
 
   return (
@@ -56,20 +74,26 @@ function App() {
             <Col className='antarmuka-admin'>
               <Route exact path="/" component={DashAdmin}>
                 <DashAdmin
-                berita={berita}
-                jumlahPelatih={jumlahPelatih}
-                jumlahSiswa={jumlahSiswa}
-                jumlahPesanan={jumlahPesanan}
+                  berita={berita}
+                  jumlahPelatih={jumlahPelatih}
+                  jumlahSiswa={jumlahSiswa}
+                  jumlahPesanan={jumlahPesanan}
                 />
               </Route>
               <Route path="/pelatih" component={PelatihAdmin}>
-                <PelatihAdmin/>
+                <PelatihAdmin
+                  pelatih={pelatih}
+                />
               </Route>
               <Route path="/siswa" component={SiswaAdmin}>
-                <SiswaAdmin/>
+                <SiswaAdmin
+                  siswa={siswa}
+                />
               </Route>
               <Route path="/pesanan" component={PesananAdmin}>
-                <PesananAdmin/>
+                <PesananAdmin
+                  pesanan={pesanan}
+                />
               </Route>
               
             </Col>

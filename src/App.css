@@ -51,6 +51,16 @@
   top: 10px;
 }
 
+.fa-edit {
+  color: orange;
+  margin: 5px;
+}
+
+.fa-trash {
+  color: red;
+  margin: 5px;
+}
+
 div.antarmuka-admin {
   margin: 25px;
   padding: 0px;
@@ -93,4 +103,8 @@ div.sidebar {
 .navbar-dark .navbar-nav a .active {
   color: white;
   text-decoration: none;
+}
+
+.small-text {
+  font-size: 12px;
 }

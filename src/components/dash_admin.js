@@ -1,6 +1,5 @@
 import React from 'react';
-import Table from 'react-bootstrap/Table';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Row, Col, Card, Table } from 'react-bootstrap';
 import '../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserAstronaut, faUser, faFileInvoiceDollar, faComments } from '@fortawesome/free-solid-svg-icons';
@@ -17,7 +16,7 @@ function DashAdmin(props){
                             <FontAwesomeIcon icon={faComments}/> Berita
                         </Card.Header>
                         <Card.Body>
-                            <Table striped bordered hover size='sm'>
+                            <Table striped bordered hover size='sm' className='center-text'>
                                 <thead>
                                     <tr>
                                         <th>Waktu</th>
