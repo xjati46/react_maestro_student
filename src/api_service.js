@@ -10,6 +10,7 @@ export default class API {
             },
             })
     };
+
     static updatePelatih(token) {
         return fetch('http://127.0.0.1:8000/api/pelatih/', {
             method: 'GET',
@@ -19,6 +20,7 @@ export default class API {
             },
             })
     };
+
     static updateSiswa(token) {
         return fetch('http://127.0.0.1:8000/api/siswa/', {
             method: 'GET',
@@ -28,6 +30,7 @@ export default class API {
             },
             })
     };
+
     static updatePesanan(token) {
         return fetch('http://127.0.0.1:8000/api/pesanan/', {
             method: 'GET',
@@ -38,4 +41,23 @@ export default class API {
             })
     };
 
+    static loginUser(body) {
+        return fetch(`http://127.0.0.1:8000/auth/`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body)
+          }).then( resp => resp.json())
+    };
+   
+    // static registerUser(body) {
+    //     return fetch(`http://127.0.0.1:8000/api/users/`, {
+    //         method: 'POST',
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify(body)
+    //       }).then( resp => resp.json())
+    // };
 }
