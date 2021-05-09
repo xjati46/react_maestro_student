@@ -9,13 +9,12 @@ import { Route, HashRouter } from "react-router-dom";
 import PelatihAdmin from './components/pelatih_admin';
 import SiswaAdmin from './components/siswa_admin';
 import PesananAdmin from './components/pesanan_admin';
+import VerifikasiAdmin from './components/verifikasi_admin';
 
 function App() {
 
   const [ berita, setBerita ] = useState([]);
-  const [ jumlahPelatih, setJumlahPelatih ] = useState([]);
-  const [ jumlahSiswa, setJumlahSiswa ] = useState([]);
-  const [ jumlahPesanan, setJumlahPesanan ] = useState([]);
+  const [ user, setUser ] = useState([]);
   const [ pelatih, setPelatih ] = useState([]);
   const [ siswa, setSiswa ] = useState([]);
   const [ pesanan, setPesanan ] = useState([]);
@@ -26,19 +25,9 @@ function App() {
     .then( resp => setBerita(resp))
     .catch( error => console.log(error));
 
-    API.updatePelatih()
+    API.daftarUser()
     .then( resp => resp.json())
-    .then( resp => setJumlahPelatih(resp))
-    .catch( error => console.log(error));
-
-    API.updateSiswa()
-    .then( resp => resp.json())
-    .then( resp => setJumlahSiswa(resp))
-    .catch( error => console.log(error));
-
-    API.updatePesanan()
-    .then( resp => resp.json())
-    .then( resp => setJumlahPesanan(resp))
+    .then( resp => setUser(resp))
     .catch( error => console.log(error));
 
     API.daftarPelatih()
@@ -75,14 +64,15 @@ function App() {
               <Route exact path="/" component={DashAdmin}>
                 <DashAdmin
                   berita={berita}
-                  jumlahPelatih={jumlahPelatih}
-                  jumlahSiswa={jumlahSiswa}
-                  jumlahPesanan={jumlahPesanan}
+                  jumlahPelatih={pelatih}
+                  jumlahSiswa={siswa}
+                  jumlahPesanan={pesanan}
                 />
               </Route>
               <Route path="/pelatih" component={PelatihAdmin}>
                 <PelatihAdmin
                   pelatih={pelatih}
+                  user={user}
                 />
               </Route>
               <Route path="/siswa" component={SiswaAdmin}>
@@ -92,6 +82,11 @@ function App() {
               </Route>
               <Route path="/pesanan" component={PesananAdmin}>
                 <PesananAdmin
+                  pesanan={pesanan}
+                />
+              </Route>
+              <Route path="/verifikasi" component={VerifikasiAdmin}>
+                <VerifikasiAdmin
                   pesanan={pesanan}
                 />
               </Route>

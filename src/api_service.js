@@ -11,28 +11,8 @@ export default class API {
             })
     };
 
-    static updatePelatih(token) {
-        return fetch('http://127.0.0.1:8000/api/pelatih/', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Token ${TOKEN}`
-            },
-            })
-    };
-
-    static updateSiswa(token) {
-        return fetch('http://127.0.0.1:8000/api/siswa/', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Token ${TOKEN}`
-            },
-            })
-    };
-
-    static updatePesanan(token) {
-        return fetch('http://127.0.0.1:8000/api/pesanan/', {
+    static daftarUser(token) {
+        return fetch('http://127.0.0.1:8000/api/users/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
