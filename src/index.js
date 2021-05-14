@@ -14,8 +14,11 @@ function Router() {
   return (
     <React.StrictMode>
       <BrowserRouter>
-        <Route exact path='/' component={Auth} />
-        <Route path='/admin' component={App} />
+        <Route exact path='/' component={Auth}/>
+        <Route
+          path='/admin'
+          component={App}
+        />
       </BrowserRouter>
     </React.StrictMode>
   )

@@ -71,7 +71,7 @@ function App() {
               <Sidebar/>
             </Col>
             <Col className='antarmuka-admin'>
-              <Route exact path="/" component={DashAdmin}>
+              <Route exact path="/">
                 <DashAdmin
                   berita={berita}
                   jumlahPelatih={pelatih}
@@ -80,25 +80,25 @@ function App() {
                 />
               </Route>
               
-              <Route path="/pelatih" component={PelatihAdmin}>
+              <Route path="/pelatih">
                 <PelatihAdmin
                   pelatih={pelatih}
                   user={user}
                   pelatihDitambahkan={pelatihDitambahkan}
                 />
               </Route>
-              <Route path="/siswa" component={SiswaAdmin}>
+              <Route path="/siswa">
                 <SiswaAdmin
                   siswa={siswa}
                   siswaDitambahkan={siswaDitambahkan}
                 />
               </Route>
-              <Route path="/pesanan" component={PesananAdmin}>
+              <Route path="/pesanan">
                 <PesananAdmin
                   pesanan={pesanan}
                 />
               </Route>
-              <Route path="/verifikasi" component={VerifikasiAdmin}>
+              <Route path="/verifikasi">
                 <VerifikasiAdmin
                   pesanan={pesanan}
                 />

@@ -11,31 +11,31 @@ function Sidebar() {
     <React.Fragment>
         <Navbar expand="s" variant='dark'>
             <Nav className='center-text'>
-                <Nav.Link as={NavLink} exact to='/'>
+                <Nav.Link as={NavLink} exact to='/' replace>
                     <div>
                         <FontAwesomeIcon icon={faHome} size='2x'/>
                         Beranda
                     </div>
                 </Nav.Link>
-                <Nav.Link as={NavLink} to='/pelatih'>
+                <Nav.Link as={NavLink} to='/pelatih' replace>
                     <div>
                         <FontAwesomeIcon icon={faUserAstronaut} size='2x'/>
                         Pelatih
                     </div>
                 </Nav.Link>
-                <Nav.Link as={NavLink} to='/siswa'>
+                <Nav.Link as={NavLink} to='/siswa' replace>
                     <div>
                         <FontAwesomeIcon icon={faUser} size='2x'/>
                         Siswa
                     </div>
                 </Nav.Link>
-                <Nav.Link as={NavLink} to='/pesanan'>
+                <Nav.Link as={NavLink} to='/pesanan' replace>
                     <div>
                         <FontAwesomeIcon icon={faFileInvoiceDollar} size='2x'/>
                         Pesanan
                     </div>
                 </Nav.Link>
-                <Nav.Link as={NavLink} to='/verifikasi'>
+                <Nav.Link as={NavLink} to='/verifikasi' replace>
                     <div>
                         <FontAwesomeIcon icon={faTasks} size='2x'/>
                         Verifikasi
