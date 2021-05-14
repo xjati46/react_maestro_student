@@ -54,11 +54,13 @@
 .fa-edit {
   color: orange;
   margin: 5px;
+  cursor: pointer;
 }
 
 .fa-trash {
   color: red;
   margin: 5px;
+  cursor: pointer;
 }
 
 div.antarmuka-admin {

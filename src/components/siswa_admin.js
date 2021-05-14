@@ -31,6 +31,12 @@ const klikTambah = () => {
   .catch(error => console.log(error))
 };
 
+const klikHapus = siswa => {
+  API.hapusSiswa(siswa.id)
+  .then( () => props.klikHapus(siswa))
+  .catch( error => console.log(error))
+};
+
   return (
     <div>
       <Container>
@@ -112,7 +118,7 @@ const klikTambah = () => {
                     <td>{siswa.nama_panggilan}</td>
                     <td>{siswa.jenis_kelamin}</td>
                     <td>{siswa.usia} th</td>
-                    <td><FontAwesomeIcon icon={faEdit}/> <FontAwesomeIcon icon={faTrash}/></td>
+                    <td><FontAwesomeIcon icon={faEdit} title='Ubah Siswa'/> <FontAwesomeIcon icon={faTrash} onClick={() => klikHapus(siswa)} title='Hapus Siswa'/></td>
                   </tr>   
                 )
               })}

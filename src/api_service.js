@@ -73,6 +73,16 @@ export default class API {
           }).then( resp => resp.json())
     };
 
+    static hapusSiswa(id_siswa) {
+        return fetch(`http://127.0.0.1:8000/api/siswa/${id_siswa}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Token ${TOKEN}`
+            }
+          })
+    };
+
     // static loginUser(body) {
     //     return fetch(`http://127.0.0.1:8000/auth/`, {
     //         method: 'POST',

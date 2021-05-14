@@ -57,6 +57,11 @@ function App() {
     setSiswa(siswaBaru);
   };
 
+  const klikHapus = sisw => {
+    const siswaBaru = siswa.filter( sis => sis.id !== sisw.id );
+    setSiswa(siswaBaru);
+  };
+
   return (
     <HashRouter>
       <div>
@@ -91,6 +96,7 @@ function App() {
                 <SiswaAdmin
                   siswa={siswa}
                   siswaDitambahkan={siswaDitambahkan}
+                  klikHapus={klikHapus}
                 />
               </Route>
               <Route path="/pesanan">
