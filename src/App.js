@@ -47,6 +47,16 @@ function App() {
 
   }, []);
 
+  const pelatihDitambahkan = pel => {
+    const pelatihBaru = [...pelatih, pel];
+    setPelatih(pelatihBaru);
+  };
+
+  const siswaDitambahkan = sis => {
+    const siswaBaru = [...siswa, sis];
+    setSiswa(siswaBaru);
+  };
+
   return (
     <HashRouter>
       <div>
@@ -69,15 +79,18 @@ function App() {
                   jumlahPesanan={pesanan}
                 />
               </Route>
+              
               <Route path="/pelatih" component={PelatihAdmin}>
                 <PelatihAdmin
                   pelatih={pelatih}
                   user={user}
+                  pelatihDitambahkan={pelatihDitambahkan}
                 />
               </Route>
               <Route path="/siswa" component={SiswaAdmin}>
                 <SiswaAdmin
                   siswa={siswa}
+                  siswaDitambahkan={siswaDitambahkan}
                 />
               </Route>
               <Route path="/pesanan" component={PesananAdmin}>

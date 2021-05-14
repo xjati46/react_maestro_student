@@ -51,6 +51,28 @@ export default class API {
             })
     };
 
+    static tambahPelatih(body) {
+        return fetch(`http://127.0.0.1:8000/api/pelatih/`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Token ${TOKEN}`
+            },
+            body: JSON.stringify(body)
+          }).then( resp => resp.json())
+    };
+
+    static tambahSiswa(body) {
+        return fetch(`http://127.0.0.1:8000/api/siswa/`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Token ${TOKEN}`
+            },
+            body: JSON.stringify(body)
+          }).then( resp => resp.json())
+    };
+
     // static loginUser(body) {
     //     return fetch(`http://127.0.0.1:8000/auth/`, {
     //         method: 'POST',

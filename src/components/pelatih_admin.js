@@ -1,17 +1,40 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import { Container, Row, Table, Button, Modal, Form, Col } from 'react-bootstrap';
 import '../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 import '../App.css';
+import API from '../api_service';
 
 function PelatihAdmin(props) {
 
+/// STATE
   const [modal, setModal] = useState(false);
+  
+  // const [usr, setUsr] = useState('');
+  const [nl, setNl] = useState('');
+  const [np, setNp] = useState('');
+  const [jk, setJk] = useState('Laki-laki');
+  const [bh, setBh] = useState('0.6');
 
+/// EVENT HANDLER
   const handlerMuncul = () => setModal(true);
   const handlerTutup = () => setModal(false);
 
+  const klikTambah = () => {
+    API.tambahPelatih({
+      // user: usr,
+      nama_lengkap: nl,
+      nama_panggilan: np,
+      jenis_kelamin: jk,
+      bagi_hasil: bh,
+    })
+    .then(resp => props.pelatihDitambahkan(resp))
+    .then(setModal(false))
+    .catch(error => console.log(error));
+  };
+
+/// BODY
   return (
     <div>
       <Container>
@@ -26,46 +49,47 @@ function PelatihAdmin(props) {
             <Modal.Body>
               
               <Form>
-                <Form.Group controlId="user">
-                  <Form.Label>Nama User</Form.Label>
-                  <Form.Control as="select">
-                    {props.user && props.user.map( user => {
+               
+                {/* <Form.Group controlId="usr">
+                  <Form.Label>Nama Pengguna</Form.Label>
+                  <Form.Control as="select" value={usr.id} onChange={evt => setUsr(evt.target.value)}>
+                    {props.user && props.user.map( x => {
                       return (
-                        <option key={user.id}>{user.username}</option>  
+                        <option value={x.id} key={x.id}>{x.username}</option>  
                       )
                     })}
                   </Form.Control>
-                </Form.Group>
-
+                </Form.Group> */}
+                
                 <Form.Row>
                   <Col>
-                    <Form.Group controlId="nama_lengkap">
+                    <Form.Group controlId="nl">
                       <Form.Label>Nama Lengkap</Form.Label>
-                      <Form.Control type="text" />
+                      <Form.Control type="text" value={nl} onChange={evt => setNl(evt.target.value)}/>
                     </Form.Group>
                   </Col>
                   <Col xs={4}>
-                    <Form.Group controlId="nama_panggilan">
+                    <Form.Group controlId="np">
                       <Form.Label>Nama Panggilan</Form.Label>
-                      <Form.Control type="text" />
+                      <Form.Control type="text" value={np} onChange={evt => setNp(evt.target.value)}/>
                     </Form.Group>
                   </Col>
                 </Form.Row>
                 
                 <Form.Row>
-                  <Form.Group controlId="jenis_kelamin" as={Col}>
+                  <Form.Group controlId="jk" as={Col}>
                     <Form.Label>Jenis Kelamin</Form.Label>
-                    <Form.Control as="select">
-                      <option>Laki-laki</option>
-                      <option>Perempuan</option>
+                    <Form.Control as="select" value={jk} onChange={evt => setJk(evt.target.value)}>
+                      <option value="Laki-laki">Laki-laki</option>
+                      <option value="Perempuan">Perempuan</option>
                     </Form.Control>
                   </Form.Group>
 
-                  <Form.Group controlId="bagi_hasil" as={Col}>
+                  <Form.Group controlId="bh" as={Col}>
                     <Form.Label>Bagi Hasil</Form.Label>
-                    <Form.Control as="select">
-                      <option>60%</option>
-                      <option>70%</option>
+                    <Form.Control as="select" value={bh} onChange={evt => setBh(evt.target.value)}>
+                      <option value="0.6">60%</option>
+                      <option value="0.7">70%</option>
                     </Form.Control>
                   </Form.Group>
 
@@ -78,10 +102,10 @@ function PelatihAdmin(props) {
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handlerTutup}>
-                Close
+                Tutup
               </Button>
-              <Button variant="primary" onClick={handlerTutup}>
-                Save Changes
+              <Button variant="primary" onClick={klikTambah}>
+                Simpan
               </Button>
             </Modal.Footer>
           </Modal>
@@ -93,6 +117,7 @@ function PelatihAdmin(props) {
                 <th>#</th>
                 <th>Nama Pengguna</th>
                 <th>Nama Lengkap</th>
+                <th>Nama Panggilan</th>
                 <th>Jenis Kelamin</th>
                 <th>Bagi Hasil</th>
                 <th>Aksi</th>
@@ -103,8 +128,9 @@ function PelatihAdmin(props) {
                 return (
                   <tr key={pelatih.id}>
                     <td>{index+1}</td>
-                    <td>{pelatih.user_name}</td>
+                    <td>{pelatih.user}</td>
                     <td>{pelatih.nama_lengkap}</td>
+                    <td>{pelatih.nama_panggilan}</td>
                     <td>{pelatih.jenis_kelamin}</td>
                     <td>{pelatih.bagi_hasil * 100} %</td>
                     <td><FontAwesomeIcon icon={faEdit}/> <FontAwesomeIcon icon={faTrash}/></td>
@@ -117,6 +143,6 @@ function PelatihAdmin(props) {
       </Container>
     </div>
   );
-}
+};
 
 export default PelatihAdmin;
