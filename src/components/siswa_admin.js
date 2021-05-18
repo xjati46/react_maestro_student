@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { Container, Row, Table, Button, Modal, Form, Col } from 'react-bootstrap';
 import '../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,7 +19,13 @@ const [usia, setUsia] = useState('');
 const [pilihSiswa, setPilihSiswa] = useState({});
 
 /// EVENT HANDLER
-const handlerMunculTambah = () => setModalTambah(true);
+const handlerMunculTambah = () => {
+  setModalTambah(true);
+  setNl('');
+  setNp('');
+  setJk('Laki-laki');
+  setUsia('');
+};
 const handlerTutupTambah = () => setModalTambah(false);
 const handlerMuncul2 = () => setModal2(true);
 const handlerTutup2 = () => setModal2(false);
@@ -28,10 +34,6 @@ const klikPilihSiswa = siswa => {
   setPilihSiswa(siswa);
   handlerMuncul2();
 };
-
-// useEffect( () => {
-//   setPilihSiswa({});
-// }, [props.siswa]);
 
 const klikTambah = () => {
   API.tambahSiswa({
