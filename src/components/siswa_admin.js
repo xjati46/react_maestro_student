@@ -55,54 +55,6 @@ const klikHapus = siswa => {
           <Button variant="success" onClick={handlerMunculTambah}>
             <FontAwesomeIcon icon={faPlus}/> Tambah Siswa
           </Button>
-          <Modal show={modalTambah} onHide={handlerTutupTambah}>
-            <Modal.Header closeButton>
-              <Modal.Title>Tambah Siswa</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              
-              <Form>
-                <Form.Row>
-                  <Col>
-                    <Form.Group controlId="nl">
-                      <Form.Label>Nama Lengkap</Form.Label>
-                      <Form.Control type="text" value={nl} onChange={evt => setNl(evt.target.value)}/>
-                    </Form.Group>
-                  </Col>
-                  <Col xs={4}>
-                    <Form.Group controlId="np">
-                      <Form.Label>Nama Panggilan</Form.Label>
-                      <Form.Control type="text" value={np} onChange={evt => setNp(evt.target.value)}/>
-                    </Form.Group>
-                  </Col>
-                </Form.Row>
-                
-                <Form.Row>
-                  <Form.Group controlId="jk" as={Col}>
-                    <Form.Label>Jenis Kelamin</Form.Label>
-                    <Form.Control as="select" value={jk} onChange={evt => setJk(evt.target.value)}>
-                      <option value="Laki-laki">Laki-laki</option>
-                      <option value="Perempuan">Perempuan</option>
-                    </Form.Control>
-                  </Form.Group>
-
-                  <Form.Group controlId="usia" as={Col}>
-                    <Form.Label>Usia</Form.Label>
-                    <Form.Control type="text" value={usia} onChange={evt => setUsia(evt.target.value)}/>
-                  </Form.Group>
-                </Form.Row>
-              </Form>
-
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handlerTutupTambah}>
-                Tutup
-              </Button>
-              <Button variant="primary" onClick={klikTambah}>
-                Simpan
-              </Button>
-            </Modal.Footer>
-          </Modal>
         </Row>
         <Row className='antarmuka-admin-card'>
           <Table striped bordered hover size='sm' className='center-text'>
@@ -119,47 +71,90 @@ const klikHapus = siswa => {
             <tbody>
               {props.siswa && props.siswa.map( (siswa, index) => {
                 return (
-                  <React.Fragment>
-                    <tr key={siswa.id}>
-                      <td>{index+1}</td>
-                      <td>{siswa.nama_lengkap}</td>
-                      <td>{siswa.nama_panggilan}</td>
-                      <td>{siswa.jenis_kelamin}</td>
-                      <td>{siswa.usia} th</td>
-                      <td>
-                        <FontAwesomeIcon icon={faEdit} title='Ubah Siswa'/> 
-                        <FontAwesomeIcon
-                          icon={faTrash}
-                          onClick={() => klikPilihSiswa(siswa)}
-                          title='Hapus Siswa'
-                        />
-                      </td>
-                    </tr>
-                    <Modal show={modal2} onHide={handlerTutup2}>
-                      <Modal.Header closeButton>
-                        <Modal.Title>Hapus Siswa</Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        Yakin hapus <strong>{pilihSiswa.nama_lengkap}</strong>?
-                      </Modal.Body>
-                      <Modal.Footer>
-                        <Button variant="secondary" onClick={handlerTutup2}>
-                          Tutup
-                        </Button>
-                        <Button variant="danger" onClick={() => klikHapus(pilihSiswa.id)}>
-                          Hapus
-                        </Button>
-                      </Modal.Footer>
-                    </Modal>
-
-                  </React.Fragment>
+                  <tr key={siswa.id}>
+                    <td>{index+1}</td>
+                    <td>{siswa.nama_lengkap}</td>
+                    <td>{siswa.nama_panggilan}</td>
+                    <td>{siswa.jenis_kelamin}</td>
+                    <td>{siswa.usia} th</td>
+                    <td>
+                      <FontAwesomeIcon icon={faEdit} title='Ubah Siswa'/> 
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        onClick={() => klikPilihSiswa(siswa)}
+                        title='Hapus Siswa'
+                      />
+                    </td>
+                  </tr>
                 )
               })}
             </tbody>
           </Table>
         </Row>
-        
       </Container>
+
+      <Modal show={modalTambah} onHide={handlerTutupTambah}>
+        <Modal.Header closeButton>
+          <Modal.Title>Tambah Siswa</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Row>
+              <Col>
+                <Form.Group controlId="nl">
+                  <Form.Label>Nama Lengkap</Form.Label>
+                  <Form.Control type="text" value={nl} onChange={evt => setNl(evt.target.value)}/>
+                </Form.Group>
+              </Col>
+              <Col xs={4}>
+                <Form.Group controlId="np">
+                  <Form.Label>Nama Panggilan</Form.Label>
+                  <Form.Control type="text" value={np} onChange={evt => setNp(evt.target.value)}/>
+                </Form.Group>
+              </Col>
+            </Form.Row>
+            <Form.Row>
+              <Form.Group controlId="jk" as={Col}>
+                <Form.Label>Jenis Kelamin</Form.Label>
+                <Form.Control as="select" value={jk} onChange={evt => setJk(evt.target.value)}>
+                  <option value="Laki-laki">Laki-laki</option>
+                  <option value="Perempuan">Perempuan</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group controlId="usia" as={Col}>
+                <Form.Label>Usia</Form.Label>
+                <Form.Control type="text" value={usia} onChange={evt => setUsia(evt.target.value)}/>
+              </Form.Group>
+            </Form.Row>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handlerTutupTambah}>
+            Tutup
+          </Button>
+          <Button variant="primary" onClick={klikTambah}>
+            Simpan
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={modal2} onHide={handlerTutup2}>
+        <Modal.Header closeButton>
+          <Modal.Title>Hapus Siswa</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Yakin hapus <strong>{pilihSiswa.nama_lengkap}</strong>?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handlerTutup2}>
+            Tutup
+          </Button>
+          <Button variant="danger" onClick={() => klikHapus(pilihSiswa.id)}>
+            Hapus
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
     </div>
   );
 }
