@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Container, Row, Table, Button, Modal, Form, Col } from 'react-bootstrap';
 import '../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -29,6 +29,10 @@ const klikPilihSiswa = siswa => {
   handlerMuncul2();
 };
 
+// useEffect( () => {
+//   setPilihSiswa({});
+// }, [props.siswa]);
+
 const klikTambah = () => {
   API.tambahSiswa({
     nama_lengkap: nl,
@@ -45,7 +49,7 @@ const klikHapus = siswa => {
   API.hapusSiswa(siswa)
   .then( () => props.klikHapus(siswa))
   .then(setModal2(false))
-  .catch( error => console.log(error))
+  .catch( error => console.log(error));
 };
 
   return (

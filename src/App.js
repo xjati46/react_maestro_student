@@ -59,7 +59,7 @@ function App() {
   };
 
   const klikHapus = sisw => {
-    const siswaBaru = siswa.filter( sis => sis.id !== sisw.id );
+    const siswaBaru = siswa.filter( sis => sis.id !== sisw );
     setSiswa(siswaBaru);
   };
 
