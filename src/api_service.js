@@ -83,6 +83,17 @@ export default class API {
           })
     };
 
+    static ubahSiswa(id_siswa, body) {
+        return fetch(`http://127.0.0.1:8000/api/siswa/${id_siswa}/`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Token ${TOKEN}`
+            },
+            body: JSON.stringify(body)
+          }).then( resp => resp.json())
+    };
+
     // static loginUser(body) {
     //     return fetch(`http://127.0.0.1:8000/auth/`, {
     //         method: 'POST',
