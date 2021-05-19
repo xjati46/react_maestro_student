@@ -11,14 +11,12 @@ function SiswaAdmin(props) {
 const [modalTambah, setModalTambah] = useState(false);
 const [modalHapus, setModalHapus] = useState(false);
 const [modalUbah, setModalUbah] = useState(false);
-  
+const [pilihSiswaDihapus, setPilihSiswaDihapus] = useState({});
+const [pilihSiswaDiubah, setPilihSiswaDiubah] = useState({});  
 const [nl, setNl] = useState('');
 const [np, setNp] = useState('');
 const [jk, setJk] = useState('Laki-laki');
 const [usia, setUsia] = useState('');
-
-const [pilihSiswaDihapus, setPilihSiswaDihapus] = useState({});
-const [pilihSiswaDiubah, setPilihSiswaDiubah] = useState({});
 
 /// EVENT HANDLER
 const handlerMunculTambah = () => {
@@ -72,8 +70,8 @@ const klikUbah = siswa => {
 };
 
 const klikHapus = siswa => {
-  API.hapusSiswa(siswa)
-  .then( () => props.klikHapus(siswa))
+  API.hapusSiswa(siswa.id)
+  .then( () => props.siswaDihapus(siswa))
   .then(setModalHapus(false))
   .catch( error => console.log(error));
 };
@@ -234,7 +232,7 @@ useEffect( () => {
           <Button variant="secondary" onClick={handlerTutupHapus}>
             Batal
           </Button>
-          <Button variant="danger" onClick={() => klikHapus(pilihSiswaDihapus.id)}>
+          <Button variant="danger" onClick={() => klikHapus(pilihSiswaDihapus)}>
             Hapus
           </Button>
         </Modal.Footer>

@@ -13,13 +13,14 @@ import VerifikasiAdmin from './components/verifikasi_admin';
 
 function App() {
 
+// STATE
   const [ berita, setBerita ] = useState([]);
   const [ user, setUser ] = useState([]);
   const [ pelatih, setPelatih ] = useState([]);
   const [ siswa, setSiswa ] = useState([]);
   const [ pesanan, setPesanan ] = useState([]);
 
-
+// API CALLS
   useEffect( () => {
     API.updateBerita()
     .then( resp => resp.json())
@@ -41,13 +42,15 @@ function App() {
     .then( resp => setSiswa(resp))
     .catch( error => console.log(error));
     
-    API.daftarPesanan()
-    .then( resp => resp.json())
-    .then( resp => setPesanan(resp))
-    .catch( error => console.log(error));
+    // API.daftarPesanan()
+    // .then( resp => resp.json())
+    // .then( resp => setPesanan(resp))
+    // .catch( error => console.log(error));
 
   }, []);
 
+// EVENT HANDLER
+  // PELATIH
   const pelatihDitambahkan = pel => {
     const pelatihBaru = [...pelatih, pel];
     setPelatih(pelatihBaru);
@@ -58,6 +61,7 @@ function App() {
     setPelatih(pelatihBaru);
   };
 
+  // SISWA
   const siswaDitambahkan = sis => {
     const siswaBaru = [...siswa, sis];
     setSiswa(siswaBaru);
@@ -74,7 +78,7 @@ function App() {
   };
 
   const siswaDihapus = sisw => {
-    const siswaBaru = siswa.filter( sis => sis.id !== sisw );
+    const siswaBaru = siswa.filter( sis => sis.id !== sisw.id );
     setSiswa(siswaBaru);
   };
 
@@ -113,7 +117,7 @@ function App() {
                 <SiswaAdmin
                   siswa={siswa}
                   siswaDitambahkan={siswaDitambahkan}
-                  klikHapus={siswaDihapus}
+                  siswaDihapus={siswaDihapus}
                   siswaDiubah={siswaDiubah}
                 />
               </Route>

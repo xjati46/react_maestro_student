@@ -10,7 +10,7 @@ function PesananAdmin(props) {
   
   return (
     <div>
-      <Container>
+      {/* <Container>
         <Row className='antarmuka-admin-card'>
           <Button variant="success">
             <FontAwesomeIcon icon={faPlus}/> Tambah Pesanan
@@ -78,7 +78,7 @@ function PesananAdmin(props) {
             </tbody>
           </Table>
         </Row>
-      </Container>
+      </Container> */}
     </div>
   );
 }

@@ -11,18 +11,23 @@ function PelatihAdmin(props) {
 /// STATE
   const [modal, setModal] = useState(false);
   const [modalHapus, setModalHapus] = useState(false);
-
-
   const [pilihPelatihDihapus, setPilihPelatihDihapus] = useState({});
   
-  // const [usr, setUsr] = useState('');
+  const [usr, setUsr] = useState('');
   const [nl, setNl] = useState('');
   const [np, setNp] = useState('');
   const [jk, setJk] = useState('Laki-laki');
   const [bh, setBh] = useState('0.6');
 
 /// EVENT HANDLER
-  const handlerMuncul = () => setModal(true);
+  const handlerMuncul = () => {
+    setModal(true)
+    setUsr('');
+    setNl('');
+    setNp('');
+    setJk('Laki-laki');
+    setBh('0.6');
+  };
   const handlerTutup = () => setModal(false);
 
   const klikHapusPelatih = pelatih => {
@@ -32,9 +37,9 @@ function PelatihAdmin(props) {
 
 
 // API CALLS
-  const klikTambah = () => {
+  const klikTambah = user => {
     API.tambahPelatih({
-      // user: usr,
+      user: usr,
       nama_lengkap: nl,
       nama_panggilan: np,
       jenis_kelamin: jk,
@@ -67,16 +72,17 @@ function PelatihAdmin(props) {
               
               <Form>
                
-                {/* <Form.Group controlId="usr">
+                <Form.Group controlId="usr">
                   <Form.Label>Nama Pengguna</Form.Label>
-                  <Form.Control as="select" value={usr.id} onChange={evt => setUsr(evt.target.value)}>
+                  <Form.Control as="select" value={usr} onChange={evt => setUsr(evt.target.value)}>
+                    <option value=''>-----</option>
                     {props.user && props.user.map( x => {
                       return (
                         <option value={x.id} key={x.id}>{x.username}</option>  
                       )
                     })}
                   </Form.Control>
-                </Form.Group> */}
+                </Form.Group>
                 
                 <Form.Row>
                   <Col>
@@ -121,7 +127,7 @@ function PelatihAdmin(props) {
               <Button variant="secondary" onClick={handlerTutup}>
                 Tutup
               </Button>
-              <Button variant="primary" onClick={klikTambah}>
+              <Button variant="primary" onClick={() => klikTambah(usr)}>
                 Simpan
               </Button>
             </Modal.Footer>
@@ -145,7 +151,9 @@ function PelatihAdmin(props) {
                 return (
                   <tr key={pelatih.id}>
                     <td>{index+1}</td>
-                    <td>{pelatih.user}</td>
+                    <td>{
+                      pelatih.user ? pelatih.user_name : '-----'
+                    }</td>
                     <td>{pelatih.nama_lengkap}</td>
                     <td>{pelatih.nama_panggilan}</td>
                     <td>{pelatih.jenis_kelamin}</td>

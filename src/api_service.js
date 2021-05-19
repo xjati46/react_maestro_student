@@ -41,15 +41,15 @@ export default class API {
             })
     };
 
-    static daftarPesanan(token) {
-        return fetch('http://127.0.0.1:8000/api/pesanan/', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Token ${TOKEN}`
-            },
-            })
-    };
+    // static daftarPesanan(token) {
+    //     return fetch('http://127.0.0.1:8000/api/pesanan/', {
+    //         method: 'GET',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': `Token ${TOKEN}`
+    //         },
+    //         })
+    // };
 
     static tambahPelatih(body) {
         return fetch(`http://127.0.0.1:8000/api/pelatih/`, {
