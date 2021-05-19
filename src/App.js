@@ -53,6 +53,11 @@ function App() {
     setPelatih(pelatihBaru);
   };
 
+  const pelatihDihapus = pelat => {
+    const pelatihBaru = pelatih.filter( pel => pel.id !== pelat.id );
+    setPelatih(pelatihBaru);
+  };
+
   const siswaDitambahkan = sis => {
     const siswaBaru = [...siswa, sis];
     setSiswa(siswaBaru);
@@ -68,7 +73,7 @@ function App() {
     setSiswa(siswaBaru);
   };
 
-  const klikHapus = sisw => {
+  const siswaDihapus = sisw => {
     const siswaBaru = siswa.filter( sis => sis.id !== sisw );
     setSiswa(siswaBaru);
   };
@@ -101,13 +106,14 @@ function App() {
                   pelatih={pelatih}
                   user={user}
                   pelatihDitambahkan={pelatihDitambahkan}
+                  pelatihDihapus={pelatihDihapus}
                 />
               </Route>
               <Route path="/siswa">
                 <SiswaAdmin
                   siswa={siswa}
                   siswaDitambahkan={siswaDitambahkan}
-                  klikHapus={klikHapus}
+                  klikHapus={siswaDihapus}
                   siswaDiubah={siswaDiubah}
                 />
               </Route>

@@ -62,6 +62,16 @@ export default class API {
           }).then( resp => resp.json())
     };
 
+    static hapusPelatih(id_pelatih) {
+        return fetch(`http://127.0.0.1:8000/api/pelatih/${id_pelatih}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Token ${TOKEN}`
+            }
+          })
+    };
+
     static tambahSiswa(body) {
         return fetch(`http://127.0.0.1:8000/api/siswa/`, {
             method: 'POST',

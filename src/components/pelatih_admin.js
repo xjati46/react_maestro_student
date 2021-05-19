@@ -10,6 +10,10 @@ function PelatihAdmin(props) {
 
 /// STATE
   const [modal, setModal] = useState(false);
+  const [modalHapus, setModalHapus] = useState(false);
+
+
+  const [pilihPelatihDihapus, setPilihPelatihDihapus] = useState({});
   
   // const [usr, setUsr] = useState('');
   const [nl, setNl] = useState('');
@@ -21,6 +25,13 @@ function PelatihAdmin(props) {
   const handlerMuncul = () => setModal(true);
   const handlerTutup = () => setModal(false);
 
+  const klikHapusPelatih = pelatih => {
+    setPilihPelatihDihapus(pelatih);
+    setModalHapus(true);
+  };
+
+
+// API CALLS
   const klikTambah = () => {
     API.tambahPelatih({
       // user: usr,
@@ -34,7 +45,13 @@ function PelatihAdmin(props) {
     .catch(error => console.log(error));
   };
 
-/// BODY
+  const klikHapus = pelatih => {
+    API.hapusPelatih(pelatih.id)
+    .then( () => props.pelatihDihapus(pelatih))
+    .then(setModalHapus(false))
+    .catch( error => console.log(error));
+  };
+
   return (
     <div>
       <Container>
@@ -133,7 +150,15 @@ function PelatihAdmin(props) {
                     <td>{pelatih.nama_panggilan}</td>
                     <td>{pelatih.jenis_kelamin}</td>
                     <td>{pelatih.bagi_hasil * 100} %</td>
-                    <td><FontAwesomeIcon icon={faEdit}/> <FontAwesomeIcon icon={faTrash}/></td>
+                    <td>
+                      <FontAwesomeIcon
+                        icon={faEdit}/> 
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        onClick={() => klikHapusPelatih(pelatih)}
+                        title='Hapus Pelatih'
+                      />
+                    </td>
                   </tr>   
                 )
               })}
@@ -141,6 +166,23 @@ function PelatihAdmin(props) {
           </Table>
         </Row>
       </Container>
+      
+      <Modal show={modalHapus} onHide={() => setModalHapus(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Hapus Pelatih</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Yakin hapus <strong>{pilihPelatihDihapus.nama_lengkap}</strong>?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setModalHapus(false)}>
+            Batal
+          </Button>
+          <Button variant="danger" onClick={() => klikHapus(pilihPelatihDihapus)}>
+            Hapus
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
