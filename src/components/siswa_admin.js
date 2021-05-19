@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Container, Row, Table, Button, Modal, Form, Col } from 'react-bootstrap';
 import '../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,14 +9,16 @@ function SiswaAdmin(props) {
 
 /// STATE
 const [modalTambah, setModalTambah] = useState(false);
-const [modal2, setModal2] = useState(false);
+const [modalHapus, setModalHapus] = useState(false);
+const [modalUbah, setModalUbah] = useState(false);
   
 const [nl, setNl] = useState('');
 const [np, setNp] = useState('');
 const [jk, setJk] = useState('Laki-laki');
 const [usia, setUsia] = useState('');
 
-const [pilihSiswa, setPilihSiswa] = useState({});
+const [pilihSiswaDihapus, setPilihSiswaDihapus] = useState({});
+const [pilihSiswaDiubah, setPilihSiswaDiubah] = useState({});
 
 /// EVENT HANDLER
 const handlerMunculTambah = () => {
@@ -27,14 +29,24 @@ const handlerMunculTambah = () => {
   setUsia('');
 };
 const handlerTutupTambah = () => setModalTambah(false);
-const handlerMuncul2 = () => setModal2(true);
-const handlerTutup2 = () => setModal2(false);
 
-const klikPilihSiswa = siswa => {
-  setPilihSiswa(siswa);
-  handlerMuncul2();
+const handlerMunculHapus = () => setModalHapus(true);
+const handlerTutupHapus = () => setModalHapus(false);
+
+const handlerMunculUbah = () => setModalUbah(true);
+const handlerTutupUbah = () => setModalUbah(false);
+
+const klikHapusSiswa = siswa => {
+  setPilihSiswaDihapus(siswa);
+  handlerMunculHapus();
 };
 
+const klikUbahSiswa = siswa => {
+  setPilihSiswaDiubah(siswa);
+  handlerMunculUbah();
+};
+
+// API CALLS
 const klikTambah = () => {
   API.tambahSiswa({
     nama_lengkap: nl,
@@ -47,12 +59,31 @@ const klikTambah = () => {
   .catch(error => console.log(error))
 };
 
+const klikUbah = siswa => {
+  API.ubahSiswa(siswa.id, {
+    nama_lengkap: nl,
+    nama_panggilan: np,
+    jenis_kelamin: jk,
+    usia: usia,
+  })
+  .then(resp => props.siswaDiubah(resp))
+  .then(setModalUbah(false))
+  .catch(error => console.log(error));
+};
+
 const klikHapus = siswa => {
   API.hapusSiswa(siswa)
   .then( () => props.klikHapus(siswa))
-  .then(setModal2(false))
+  .then(setModalHapus(false))
   .catch( error => console.log(error));
 };
+
+useEffect( () => {
+  setNl(pilihSiswaDiubah.nama_lengkap);
+  setNp(pilihSiswaDiubah.nama_panggilan);
+  setJk(pilihSiswaDiubah.jenis_kelamin);
+  setUsia(pilihSiswaDiubah.usia);
+}, [pilihSiswaDiubah]);
 
   return (
     <div>
@@ -84,10 +115,13 @@ const klikHapus = siswa => {
                     <td>{siswa.jenis_kelamin}</td>
                     <td>{siswa.usia} th</td>
                     <td>
-                      <FontAwesomeIcon icon={faEdit} title='Ubah Siswa'/> 
+                      <FontAwesomeIcon
+                        icon={faEdit}
+                        onClick={() => klikUbahSiswa(siswa)}
+                        title='Ubah Siswa'/> 
                       <FontAwesomeIcon
                         icon={faTrash}
-                        onClick={() => klikPilihSiswa(siswa)}
+                        onClick={() => klikHapusSiswa(siswa)}
                         title='Hapus Siswa'
                       />
                     </td>
@@ -136,26 +170,71 @@ const klikHapus = siswa => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handlerTutupTambah}>
-            Tutup
+            Batal
           </Button>
-          <Button variant="primary" onClick={klikTambah}>
+          <Button variant="success" onClick={klikTambah}>
             Simpan
           </Button>
         </Modal.Footer>
       </Modal>
 
-      <Modal show={modal2} onHide={handlerTutup2}>
+      <Modal show={modalUbah} onHide={handlerTutupUbah}>
+        <Modal.Header closeButton>
+          <Modal.Title>Ubah Data Siswa</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Row>
+              <Col>
+                <Form.Group controlId="nl">
+                  <Form.Label>Nama Lengkap</Form.Label>
+                  <Form.Control type="text" value={nl} onChange={evt => setNl(evt.target.value)} />
+                </Form.Group>
+              </Col>
+              <Col xs={4}>
+                <Form.Group controlId="np">
+                  <Form.Label>Nama Panggilan</Form.Label>
+                  <Form.Control type="text" value={np} onChange={evt => setNp(evt.target.value)} />
+                </Form.Group>
+              </Col>
+            </Form.Row>
+            <Form.Row>
+              <Form.Group controlId="jk" as={Col}>
+                <Form.Label>Jenis Kelamin</Form.Label>
+                <Form.Control as="select" value={jk} onChange={evt => setJk(evt.target.value)} >
+                  <option value="Laki-laki">Laki-laki</option>
+                  <option value="Perempuan">Perempuan</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group controlId="usia" as={Col}>
+                <Form.Label>Usia</Form.Label>
+                <Form.Control type="text" value={usia} onChange={evt => setUsia(evt.target.value)} />
+              </Form.Group>
+            </Form.Row>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handlerTutupUbah}>
+            Batal
+          </Button>
+          <Button variant="warning" onClick={() => klikUbah(pilihSiswaDiubah)}>
+            Ubah
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={modalHapus} onHide={handlerTutupHapus}>
         <Modal.Header closeButton>
           <Modal.Title>Hapus Siswa</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Yakin hapus <strong>{pilihSiswa.nama_lengkap}</strong>?
+          Yakin hapus <strong>{pilihSiswaDihapus.nama_lengkap}</strong>?
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handlerTutup2}>
-            Tutup
+          <Button variant="secondary" onClick={handlerTutupHapus}>
+            Batal
           </Button>
-          <Button variant="danger" onClick={() => klikHapus(pilihSiswa.id)}>
+          <Button variant="danger" onClick={() => klikHapus(pilihSiswaDihapus.id)}>
             Hapus
           </Button>
         </Modal.Footer>

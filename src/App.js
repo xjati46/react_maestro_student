@@ -58,6 +58,16 @@ function App() {
     setSiswa(siswaBaru);
   };
 
+  const siswaDiubah = sisw => {
+    const siswaBaru = siswa.map( sis => {
+      if(sis.id === sisw.id) {
+        return sisw;
+      }
+      return sis;
+    });
+    setSiswa(siswaBaru);
+  };
+
   const klikHapus = sisw => {
     const siswaBaru = siswa.filter( sis => sis.id !== sisw );
     setSiswa(siswaBaru);
@@ -98,6 +108,7 @@ function App() {
                   siswa={siswa}
                   siswaDitambahkan={siswaDitambahkan}
                   klikHapus={klikHapus}
+                  siswaDiubah={siswaDiubah}
                 />
               </Route>
               <Route path="/pesanan">
