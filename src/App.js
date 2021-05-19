@@ -56,6 +56,16 @@ function App() {
     setPelatih(pelatihBaru);
   };
 
+  const pelatihDiubah = pelat => {
+    const pelatihBaru = pelatih.map( pel => {
+      if(pel.id === pelat.id) {
+        return pelat;
+      }
+      return pel;
+    });
+    setPelatih(pelatihBaru);
+  };
+
   const pelatihDihapus = pelat => {
     const pelatihBaru = pelatih.filter( pel => pel.id !== pelat.id );
     setPelatih(pelatihBaru);
@@ -111,6 +121,7 @@ function App() {
                   user={user}
                   pelatihDitambahkan={pelatihDitambahkan}
                   pelatihDihapus={pelatihDihapus}
+                  pelatihDiubah={pelatihDiubah}
                 />
               </Route>
               <Route path="/siswa">

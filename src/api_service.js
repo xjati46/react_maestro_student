@@ -1,6 +1,8 @@
 const TOKEN = 'fb5ec5875f75a4cb52f2a523a2f3be5c4451421d'
 
 export default class API {
+
+    // BERITA
     static updateBerita(token) {
         return fetch('http://127.0.0.1:8000/api/berita/', {
             method: 'GET',
@@ -11,6 +13,7 @@ export default class API {
             })
     };
 
+    // USER
     static daftarUser(token) {
         return fetch('http://127.0.0.1:8000/api/users/', {
             method: 'GET',
@@ -21,6 +24,7 @@ export default class API {
             })
     };
 
+    // PELATIH
     static daftarPelatih(token) {
         return fetch('http://127.0.0.1:8000/api/pelatih/', {
             method: 'GET',
@@ -30,26 +34,6 @@ export default class API {
             },
             })
     };
-
-    static daftarSiswa(token) {
-        return fetch('http://127.0.0.1:8000/api/siswa/', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Token ${TOKEN}`
-            },
-            })
-    };
-
-    // static daftarPesanan(token) {
-    //     return fetch('http://127.0.0.1:8000/api/pesanan/', {
-    //         method: 'GET',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': `Token ${TOKEN}`
-    //         },
-    //         })
-    // };
 
     static tambahPelatih(body) {
         return fetch(`http://127.0.0.1:8000/api/pelatih/`, {
@@ -66,10 +50,32 @@ export default class API {
         return fetch(`http://127.0.0.1:8000/api/pelatih/${id_pelatih}`, {
             method: 'DELETE',
             headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${TOKEN}`
+            }
+        })
+    };
+
+    static ubahPelatih(id_pelatih, body) {
+        return fetch(`http://127.0.0.1:8000/api/pelatih/${id_pelatih}/`, {
+            method: 'PUT',
+            headers: {
               'Content-Type': 'application/json',
               'Authorization': `Token ${TOKEN}`
-            }
-          })
+            },
+            body: JSON.stringify(body)
+          }).then( resp => resp.json())
+    };
+
+    // SISWA
+    static daftarSiswa(token) {
+        return fetch('http://127.0.0.1:8000/api/siswa/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${TOKEN}`
+            },
+            })
     };
 
     static tambahSiswa(body) {
@@ -103,6 +109,16 @@ export default class API {
             body: JSON.stringify(body)
           }).then( resp => resp.json())
     };
+
+    // static daftarPesanan(token) {
+    //     return fetch('http://127.0.0.1:8000/api/pesanan/', {
+    //         method: 'GET',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': `Token ${TOKEN}`
+    //         },
+    //         })
+    // };
 
     // static loginUser(body) {
     //     return fetch(`http://127.0.0.1:8000/auth/`, {
