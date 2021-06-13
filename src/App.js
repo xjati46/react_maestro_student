@@ -42,10 +42,10 @@ function App() {
     .then( resp => setSiswa(resp))
     .catch( error => console.log(error));
     
-    // API.daftarPesanan()
-    // .then( resp => resp.json())
-    // .then( resp => setPesanan(resp))
-    // .catch( error => console.log(error));
+    API.daftarPesanan()
+    .then( resp => resp.json())
+    .then( resp => setPesanan(resp))
+    .catch( error => console.log(error));
 
   }, []);
 

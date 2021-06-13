@@ -110,15 +110,16 @@ export default class API {
           }).then( resp => resp.json())
     };
 
-    // static daftarPesanan(token) {
-    //     return fetch('http://127.0.0.1:8000/api/pesanan/', {
-    //         method: 'GET',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': `Token ${TOKEN}`
-    //         },
-    //         })
-    // };
+    // PESANAN
+    static daftarPesanan(token) {
+        return fetch('http://127.0.0.1:8000/api/pesanan/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${TOKEN}`
+            },
+            })
+    };
 
     // static loginUser(body) {
     //     return fetch(`http://127.0.0.1:8000/auth/`, {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Row, Table, Button } from 'react-bootstrap';
 import '../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrash, faPlus, faCheckDouble } from '@fortawesome/free-solid-svg-icons';
 import '../App.css';
 import NumberFormat from 'react-number-format';
 
@@ -10,7 +10,7 @@ function PesananAdmin(props) {
   
   return (
     <div>
-      {/* <Container>
+      <Container>
         <Row className='antarmuka-admin-card'>
           <Button variant="success">
             <FontAwesomeIcon icon={faPlus}/> Tambah Pesanan
@@ -28,8 +28,7 @@ function PesananAdmin(props) {
                 <th>Produk</th>
                 <th>Nilai Transaksi</th>
                 <th>Masa Berlaku</th>
-                <th>Honor Per Sesi</th>
-                <th>Honor Pencairan</th>
+                <th>Tanggal Latihan</th>
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -39,7 +38,7 @@ function PesananAdmin(props) {
                   <tr key={pesanan.id}>
                     <td>{index+1}</td>
                     <td>{pesanan.__str__}</td>
-                    <td>{pesanan.arsip ?  "Arsip" : "Aktif"}</td>
+                    <td>{pesanan.arsip ?  "Pasif" : "Aktif"}</td>
                     <td>{pesanan.nama_siswa}</td>
                     <td>{pesanan.nama_pelatih}</td>
                     <td>{pesanan.nama_produk}</td>
@@ -54,22 +53,30 @@ function PesananAdmin(props) {
                     </td>
                     {pesanan.status_habis ?
                       <td className='red'><strong>Habis</strong> {pesanan.tgl_habis}</td> :
-                      <td>{pesanan.tgl_transaksi} - {pesanan.tgl_habis}</td>}
+                      <td>{pesanan.tgl_transaksi} <br/> {pesanan.tgl_habis}</td>}
                     <td>
-                      <NumberFormat
-                        thousandSeparator={'.'}
-                        decimalSeparator={','}
-                        prefix={'Rp '}
-                        displayType={'text'} value={pesanan.honor_per_sesi}
-                      />
-                    </td>
-                    <td>
-                      <NumberFormat
-                        thousandSeparator={'.'}
-                        decimalSeparator={','}
-                        prefix={'Rp '}
-                        displayType={'text'} value={pesanan.honor_pencairan !== 0 ? pesanan.honor_pencairan : null}
-                      />
+                      {
+                      pesanan.produk_pert === 1 ? <div>
+                        {pesanan.p1} {pesanan.p1_c ? <FontAwesomeIcon icon={faCheckDouble}/> : null}
+                        </div> :
+                      pesanan.produk_pert === 4 ? <div>
+                        {pesanan.p1} {pesanan.p1_c ? <FontAwesomeIcon icon={faCheckDouble}/> : null}<br/>
+                        {pesanan.p2} {pesanan.p2_c ? <FontAwesomeIcon icon={faCheckDouble}/> : null}<br/>
+                        {pesanan.p3} {pesanan.p3_c ? <FontAwesomeIcon icon={faCheckDouble}/> : null}<br/>
+                        {pesanan.p4} {pesanan.p4_c ? <FontAwesomeIcon icon={faCheckDouble}/> : null}
+                        </div> :
+                      pesanan.produk_pert === 8 ? <div>
+                        {pesanan.p1} {pesanan.p1_c ? <FontAwesomeIcon icon={faCheckDouble}/> : null}<br/> 
+                        {pesanan.p2} {pesanan.p2_c ? <FontAwesomeIcon icon={faCheckDouble}/> : null}<br/> 
+                        {pesanan.p3} {pesanan.p3_c ? <FontAwesomeIcon icon={faCheckDouble}/> : null}<br/> 
+                        {pesanan.p4} {pesanan.p4_c ? <FontAwesomeIcon icon={faCheckDouble}/> : null}<br/> 
+                        {pesanan.p5} {pesanan.p5_c ? <FontAwesomeIcon icon={faCheckDouble}/> : null}<br/> 
+                        {pesanan.p6} {pesanan.p6_c ? <FontAwesomeIcon icon={faCheckDouble}/> : null}<br/> 
+                        {pesanan.p7} {pesanan.p7_c ? <FontAwesomeIcon icon={faCheckDouble}/> : null}<br/> 
+                        {pesanan.p8} {pesanan.p8_c ? <FontAwesomeIcon icon={faCheckDouble}/> : null}
+                        </div>
+                      : null
+                      }
                     </td>
                     <td><FontAwesomeIcon icon={faEdit}/> <FontAwesomeIcon icon={faTrash}/></td>
                   </tr>   
@@ -78,7 +85,7 @@ function PesananAdmin(props) {
             </tbody>
           </Table>
         </Row>
-      </Container> */}
+      </Container>
     </div>
   );
 }
