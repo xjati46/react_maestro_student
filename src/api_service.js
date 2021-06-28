@@ -24,6 +24,49 @@ export default class API {
             })
     };
 
+    // PRODUK
+    static daftarProduk(token) {
+        return fetch('http://127.0.0.1:8000/api/produk/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${TOKEN}`
+            },
+            })
+    };
+
+    static tambahProduk(body) {
+        return fetch(`http://127.0.0.1:8000/api/produk/`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Token ${TOKEN}`
+            },
+            body: JSON.stringify(body)
+          }).then( resp => resp.json())
+    };
+
+    static hapusProduk(id_produk) {
+        return fetch(`http://127.0.0.1:8000/api/produk/${id_produk}`, {
+            method: 'DELETE',
+            headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${TOKEN}`
+            }
+        })
+    };
+
+    static ubahProduk(id_produk, body) {
+        return fetch(`http://127.0.0.1:8000/api/produk/${id_produk}/`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Token ${TOKEN}`
+            },
+            body: JSON.stringify(body)
+          }).then( resp => resp.json())
+    };
+
     // PELATIH
     static daftarPelatih(token) {
         return fetch('http://127.0.0.1:8000/api/pelatih/', {
@@ -119,6 +162,38 @@ export default class API {
                 'Authorization': `Token ${TOKEN}`
             },
             })
+    };
+
+    static tambahPesanan(body) {
+        return fetch(`http://127.0.0.1:8000/api/pesanan/`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Token ${TOKEN}`
+            },
+            body: JSON.stringify(body)
+          }).then( resp => resp.json())
+    };
+
+    static hapusPesanan(id_pesanan) {
+        return fetch(`http://127.0.0.1:8000/api/pesanan/${id_pesanan}`, {
+            method: 'DELETE',
+            headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${TOKEN}`
+            }
+        })
+    };
+
+    static ubahPesanan(id_pesanan, body) {
+        return fetch(`http://127.0.0.1:8000/api/pesanan/${id_pesanan}/`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Token ${TOKEN}`
+            },
+            body: JSON.stringify(body)
+          }).then( resp => resp.json())
     };
 
     // static loginUser(body) {

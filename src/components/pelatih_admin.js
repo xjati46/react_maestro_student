@@ -43,7 +43,7 @@ function PelatihAdmin(props) {
   };
 
 // API CALLS
-  const klikTambah = user => {
+  const klikTambah = () => {
     API.tambahPelatih({
       user: usr,
       nama_lengkap: nl,
@@ -119,7 +119,7 @@ function PelatihAdmin(props) {
                       pelatih.user ? pelatih.user_name : '-----'
                     }</td>
                     <td>{pelatih.nama_lengkap}</td>
-                    <td>{pelatih.nama_panggilan}</td>
+                    <td>Coach {pelatih.nama_panggilan}</td>
                     <td>{pelatih.jenis_kelamin}</td>
                     <td>{pelatih.bagi_hasil * 100} %</td>
                     <td>
@@ -199,9 +199,9 @@ function PelatihAdmin(props) {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handlerTutup}>
-            Tutup
+            Batal
           </Button>
-          <Button variant="primary" onClick={() => klikTambah(usr)}>
+          <Button variant="success" onClick={klikTambah}>
             Simpan
           </Button>
         </Modal.Footer>

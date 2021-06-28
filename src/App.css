@@ -63,7 +63,16 @@
   cursor: pointer;
 }
 
-.fa-check-double {
+.fa-calendar-minus {
+  color: red;
+  cursor: pointer;
+}
+
+.form-check-input {
+  cursor: pointer;
+}
+
+.fa-check {
   color: dodgerblue;
 }
 

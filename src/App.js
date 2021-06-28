@@ -10,12 +10,14 @@ import PelatihAdmin from './components/pelatih_admin';
 import SiswaAdmin from './components/siswa_admin';
 import PesananAdmin from './components/pesanan_admin';
 import VerifikasiAdmin from './components/verifikasi_admin';
+import ProdukAdmin from './components/produk_admin';
 
 function App() {
 
 // STATE
   const [ berita, setBerita ] = useState([]);
   const [ user, setUser ] = useState([]);
+  const [ produk, setProduk ] = useState([]);
   const [ pelatih, setPelatih ] = useState([]);
   const [ siswa, setSiswa ] = useState([]);
   const [ pesanan, setPesanan ] = useState([]);
@@ -30,6 +32,11 @@ function App() {
     API.daftarUser()
     .then( resp => resp.json())
     .then( resp => setUser(resp))
+    .catch( error => console.log(error));
+
+    API.daftarProduk()
+    .then( resp => resp.json())
+    .then( resp => setProduk(resp))
     .catch( error => console.log(error));
 
     API.daftarPelatih()
@@ -50,6 +57,28 @@ function App() {
   }, []);
 
 // EVENT HANDLER
+
+  // PRODUK
+  const produkDitambahkan = prod => {
+    const produkBaru = [...produk, prod];
+    setProduk(produkBaru);
+  };
+
+  const produkDihapus = prod => {
+    const produkBaru = produk.filter( pdk => pdk.id !== prod.id );
+    setProduk(produkBaru);
+  };
+
+  const produkDiubah = prod => {
+    const produkBaru = produk.map( pdk => {
+      if(pdk.id === prod.id) {
+        return prod;
+      }
+      return pdk;
+    });
+    setProduk(produkBaru);
+  };
+
   // PELATIH
   const pelatihDitambahkan = pel => {
     const pelatihBaru = [...pelatih, pel];
@@ -92,6 +121,27 @@ function App() {
     setSiswa(siswaBaru);
   };
 
+  // PESANAN
+  const pesananDitambahkan = pes => {
+    const pesananBaru = [...pesanan, pes];
+    setPesanan(pesananBaru);
+  };
+
+  const pesananDihapus = pesn => {
+    const pesananBaru = pesanan.filter( pes => pes.id !== pesn.id );
+    setPesanan(pesananBaru);
+  };
+
+  const pesananDiubah = pesn => {
+    const pesananBaru = pesanan.map( pes => {
+      if(pes.id === pesn.id) {
+        return pesn;
+      }
+      return pes;
+    });
+    setPesanan(pesananBaru);
+  };
+
   return (
     <HashRouter>
       <div>
@@ -115,6 +165,14 @@ function App() {
                 />
               </Route>
               
+              <Route path="/produk">
+                <ProdukAdmin
+                  produk={produk}
+                  produkDitambahkan={produkDitambahkan}
+                  produkDihapus={produkDihapus}
+                  produkDiubah={produkDiubah}
+                />
+              </Route>
               <Route path="/pelatih">
                 <PelatihAdmin
                   pelatih={pelatih}
@@ -135,6 +193,12 @@ function App() {
               <Route path="/pesanan">
                 <PesananAdmin
                   pesanan={pesanan}
+                  pelatih={pelatih}
+                  siswa={siswa}
+                  produk={produk}
+                  pesananDitambahkan={pesananDitambahkan}
+                  pesananDihapus={pesananDihapus}
+                  pesananDiubah={pesananDiubah}
                 />
               </Route>
               <Route path="/verifikasi">
