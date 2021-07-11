@@ -11,6 +11,7 @@ import SiswaAdmin from './components/siswa_admin';
 import PesananAdmin from './components/pesanan_admin';
 import VerifikasiAdmin from './components/verifikasi_admin';
 import ProdukAdmin from './components/produk_admin';
+import TableAdmin from './components/table_admin';
 
 function App() {
 
@@ -199,6 +200,11 @@ function App() {
                   pesananDitambahkan={pesananDitambahkan}
                   pesananDihapus={pesananDihapus}
                   pesananDiubah={pesananDiubah}
+                />
+              </Route>
+              <Route path="/table">
+                <TableAdmin
+                  siswa={siswa}
                 />
               </Route>
               <Route path="/verifikasi">

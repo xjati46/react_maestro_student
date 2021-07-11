@@ -47,6 +47,12 @@ function Sidebar() {
                         Verifikasi
                     </div>
                 </Nav.Link>
+                <Nav.Link as={NavLink} to='/table' replace>
+                    <div>
+                        <FontAwesomeIcon icon={faTasks} size='2x'/>
+                        Tes BtsTable
+                    </div>
+                </Nav.Link>
                 <div className='divider'></div>
                 <Nav.Link as={NavLink} to='/logout'>
                     <div>
