@@ -9,9 +9,7 @@ import { Route, HashRouter } from "react-router-dom";
 import PelatihAdmin from './components/pelatih_admin';
 import SiswaAdmin from './components/siswa_admin';
 import PesananAdmin from './components/pesanan_admin';
-import VerifikasiAdmin from './components/verifikasi_admin';
 import ProdukAdmin from './components/produk_admin';
-import TableAdmin from './components/table_admin';
 
 function App() {
 
@@ -202,17 +200,6 @@ function App() {
                   pesananDiubah={pesananDiubah}
                 />
               </Route>
-              <Route path="/table">
-                <TableAdmin
-                  siswa={siswa}
-                />
-              </Route>
-              <Route path="/verifikasi">
-                <VerifikasiAdmin
-                  pesanan={pesanan}
-                />
-              </Route>
-              
             </Col>
           </Row>
 
