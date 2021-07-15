@@ -10,6 +10,7 @@ import PelatihAdmin from './components/pelatih_admin';
 import SiswaAdmin from './components/siswa_admin';
 import PesananAdmin from './components/pesanan_admin';
 import ProdukAdmin from './components/produk_admin';
+import { useCookies } from 'react-cookie';
 
 function App() {
 
@@ -21,39 +22,45 @@ function App() {
   const [ siswa, setSiswa ] = useState([]);
   const [ pesanan, setPesanan ] = useState([]);
 
+  const [ token ] = useCookies('msms-cookie');
+
 // API CALLS
   useEffect( () => {
-    API.updateBerita()
+    API.updateBerita(token['msms-cookie'])
     .then( resp => resp.json())
     .then( resp => setBerita(resp))
     .catch( error => console.log(error));
 
-    API.daftarUser()
+    API.daftarUser(token['msms-cookie'])
     .then( resp => resp.json())
     .then( resp => setUser(resp))
     .catch( error => console.log(error));
 
-    API.daftarProduk()
+    API.daftarProduk(token['msms-cookie'])
     .then( resp => resp.json())
     .then( resp => setProduk(resp))
     .catch( error => console.log(error));
 
-    API.daftarPelatih()
+    API.daftarPelatih(token['msms-cookie'])
     .then( resp => resp.json())
     .then( resp => setPelatih(resp))
     .catch( error => console.log(error));
 
-    API.daftarSiswa()
+    API.daftarSiswa(token['msms-cookie'])
     .then( resp => resp.json())
     .then( resp => setSiswa(resp))
     .catch( error => console.log(error));
     
-    API.daftarPesanan()
+    API.daftarPesanan(token['msms-cookie'])
     .then( resp => resp.json())
     .then( resp => setPesanan(resp))
     .catch( error => console.log(error));
 
-  }, []);
+  }, [token]);
+
+  useEffect(() => {
+    if(!token['msms-cookie']) window.location.href = '/';
+  }, [token]);
 
 // EVENT HANDLER
 

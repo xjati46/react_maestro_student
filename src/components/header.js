@@ -16,7 +16,7 @@ function Header() {
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <Navbar.Text>
-              Selamat Datang: <a href="#login">Mark Otto</a>
+              Selamat Datang Admin
             </Navbar.Text>
           </Navbar.Collapse>
         </Navbar>

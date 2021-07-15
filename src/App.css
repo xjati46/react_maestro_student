@@ -68,6 +68,10 @@
   cursor: pointer;
 }
 
+.logout-pointer {
+  cursor: pointer;
+}
+
 .form-check-input {
   cursor: pointer;
 }
@@ -100,6 +104,10 @@ div.sidebar {
   text-align: center;
 }
 
+.text-center {
+  text-align: center!important;
+}
+
 .divider {
   border-top: 1px solid #6cc2ff;
   margin: 10px;
@@ -126,4 +134,11 @@ div.sidebar {
 
 .red {
   color: red;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
 }

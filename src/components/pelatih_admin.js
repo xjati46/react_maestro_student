@@ -3,8 +3,8 @@ import { Container, Row, Table, Button, Modal, Form, Col } from 'react-bootstrap
 import '../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
-import '../App.css';
 import API from '../api_service';
+import { useCookies } from 'react-cookie';
 
 function PelatihAdmin(props) {
 
@@ -20,6 +20,8 @@ function PelatihAdmin(props) {
   const [np, setNp] = useState('');
   const [jk, setJk] = useState('Laki-laki');
   const [bh, setBh] = useState('0.6');
+
+  const [token] = useCookies(['msms-cookie']);
 
 /// EVENT HANDLER
   const handlerMuncul = () => {
@@ -50,14 +52,14 @@ function PelatihAdmin(props) {
       nama_panggilan: np,
       jenis_kelamin: jk,
       bagi_hasil: bh,
-    })
+    }, token['msms-cookie'])
     .then(resp => props.pelatihDitambahkan(resp))
     .then(setModal(false))
     .catch(error => console.log(error));
   };
 
   const klikHapus = pelatih => {
-    API.hapusPelatih(pelatih.id)
+    API.hapusPelatih(pelatih.id, token['msms-cookie'])
     .then( () => props.pelatihDihapus(pelatih))
     .then(setModalHapus(false))
     .catch( error => console.log(error));
@@ -70,7 +72,7 @@ function PelatihAdmin(props) {
       nama_panggilan: np,
       jenis_kelamin: jk,
       bagi_hasil: bh,
-    })
+    }, token['msms-cookie'])
     .then(resp => props.pelatihDiubah(resp))
     .then(setModalUbah(false))
     .catch(error => console.log(error));

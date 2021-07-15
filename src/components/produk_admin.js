@@ -3,9 +3,9 @@ import { Container, Row, Table, Button, Modal, Form } from 'react-bootstrap';
 import '../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
-import '../App.css';
 import API from '../api_service';
 import NumberFormat from 'react-number-format';
+import { useCookies } from 'react-cookie';
 
 function ProdukAdmin(props) {
 
@@ -19,6 +19,8 @@ function ProdukAdmin(props) {
   const [nama, setNama] = useState('');
   const [harga, setHarga] = useState('');
   const [pertemuan, setPertemuan] = useState('');
+
+  const [token] = useCookies(['msms-cookie']);
 
 /// EVENT HANDLER
   const handlerMuncul = () => {
@@ -45,14 +47,14 @@ function ProdukAdmin(props) {
       nama_produk: nama,
       harga: harga,
       jumlah_pertemuan: pertemuan
-    })
+    }, token['msms-cookie'])
     .then(resp => props.produkDitambahkan(resp))
     .then(setModal(false))
     .catch(error => console.log(error))
   };
 
   const klikHapus = produk => {
-    API.hapusProduk(produk.id)
+    API.hapusProduk(produk.id, token['msms-cookie'])
     .then( () => props.produkDihapus(produk))
     .then(setModalHapus(false))
     .catch( error => console.log(error));
@@ -63,7 +65,7 @@ function ProdukAdmin(props) {
       nama_produk: nama,
       harga: harga,
       jumlah_pertemuan: pertemuan
-    })
+    }, token['msms-cookie'])
     .then(resp => props.produkDiubah(resp))
     .then(setModalUbah(false))
     .catch(error => console.log(error));

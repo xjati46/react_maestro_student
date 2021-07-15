@@ -4,6 +4,7 @@ import '../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 import API from '../api_service';
+import { useCookies } from 'react-cookie';
 
 function SiswaAdmin(props) {
 
@@ -17,6 +18,8 @@ const [nl, setNl] = useState('');
 const [np, setNp] = useState('');
 const [jk, setJk] = useState('Laki-laki');
 const [usia, setUsia] = useState('');
+
+const [token] = useCookies(['msms-cookie']);
 
 /// EVENT HANDLER
 const handlerMunculTambah = () => {
@@ -51,7 +54,7 @@ const klikTambah = () => {
     nama_panggilan: np,
     jenis_kelamin: jk,
     usia: usia,
-  })
+  }, token['msms-cookie'])
   .then(resp => props.siswaDitambahkan(resp))
   .then(setModalTambah(false))
   .catch(error => console.log(error))
@@ -63,14 +66,14 @@ const klikUbah = siswa => {
     nama_panggilan: np,
     jenis_kelamin: jk,
     usia: usia,
-  })
+  }, token['msms-cookie'])
   .then(resp => props.siswaDiubah(resp))
   .then(setModalUbah(false))
   .catch(error => console.log(error));
 };
 
 const klikHapus = siswa => {
-  API.hapusSiswa(siswa.id)
+  API.hapusSiswa(siswa.id, token['msms-cookie'])
   .then( () => props.siswaDihapus(siswa))
   .then(setModalHapus(false))
   .catch( error => console.log(error));

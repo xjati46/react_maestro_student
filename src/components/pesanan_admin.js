@@ -3,7 +3,6 @@ import { Row, Col, Form, Table, Button, Modal } from 'react-bootstrap';
 import '../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faPlus, faCheck, faCalendarMinus } from '@fortawesome/free-solid-svg-icons';
-import '../App.css';
 import NumberFormat from 'react-number-format';
 import API from '../api_service';
 import moment from 'moment';
@@ -13,6 +12,7 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import BootstrapTable from 'react-bootstrap-table-next';
 import filterFactory, { textFilter, selectFilter } from 'react-bootstrap-table2-filter';
 import paginationFactory from 'react-bootstrap-table2-paginator';
+import { useCookies } from 'react-cookie';
 
 function PesananAdmin(props) {
   
@@ -50,6 +50,8 @@ function PesananAdmin(props) {
   const [p8, setP8] = useState(null);
   const [p8c, setP8c] = useState(false);
 
+  const [token] = useCookies(['msms-cookie']);
+
   /// EVENT HANDLER
   const handlerMuncul = () => {
     setModal(true)
@@ -81,14 +83,14 @@ function PesananAdmin(props) {
       diskon: diskon,
       tgl_transaksi: tglBayar,
       tgl_habis: tglHabis
-    })
+    }, token['msms-cookie'])
     .then(resp => props.pesananDitambahkan(resp))
     .then(setModal(false))
     .catch(error => console.log(error))
   };
 
   const klikHapus = pesanan => {
-    API.hapusPesanan(pesanan.id)
+    API.hapusPesanan(pesanan.id, token['msms-cookie'])
     .then( () => props.pesananDihapus(pesanan))
     .then(setModalHapus(false))
     .catch( error => console.log(error));
@@ -119,7 +121,7 @@ function PesananAdmin(props) {
       p7_c: p7c,
       p8: p8,
       p8_c: p8c,
-    })
+    }, token['msms-cookie'])
     .then(resp => props.pesananDiubah(resp))
     .then(setModalUbah(false))
     .catch(error => console.log(error));
@@ -744,23 +746,29 @@ function PesananAdmin(props) {
                             <Form.Control type='date' value={p1 ? p1 : ""} onChange={evt => setP1(evt.target.value)}/>
                           </Form.Group>  
                         </td>
-                        <td className='text-center'>
-                          <Form.Check
-                            type="checkbox"
-                            name="p1"
-                            value={p1c}
-                            checked={p1c}
-                            onChange={() => {
-                              if(p1c){
-                                return setP1c(false)
-                              } else {
-                                return setP1c(true)
-                              }}}
-                          />
-                          <FontAwesomeIcon
-                            icon={faCalendarMinus}
-                            onClick={() => setP1(null)}
-                          />
+                        <td>
+                          <Row>
+                            <Col className='text-center'>
+                              <FontAwesomeIcon
+                                icon={faCalendarMinus}
+                                onClick={() => setP1(null)}
+                              />
+                            </Col>
+                            <Col className='text-center'>
+                              <Form.Check
+                                type="checkbox"
+                                name="p1"
+                                value={p1c}
+                                checked={p1c}
+                                onChange={() => {
+                                  if(p1c){
+                                    return setP1c(false)
+                                  } else {
+                                    return setP1c(true)
+                                  }}}
+                              />
+                            </Col>
+                          </Row>
                         </td>
                       </tr>
                     </tbody>
