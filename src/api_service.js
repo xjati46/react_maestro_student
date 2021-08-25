@@ -76,7 +76,7 @@ export default class API {
     // PELATIH
     static daftarPelatih(token) {
         // return fetch('https://127.0.0.1:8000/api/pelatih/', {
-        return fetch('dj-maestro.herokuapp.com/api/pelatih/', {
+        return fetch('https://dj-maestro.herokuapp.com/api/pelatih/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
