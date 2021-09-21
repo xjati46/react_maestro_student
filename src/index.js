@@ -14,10 +14,12 @@ export const ReducerContext = createContext();
 
 function Router() {
 
+  const userId = localStorage.getItem('userId')
+  const userName = localStorage.getItem('userName')
+
   const initialState = {
-    userId: '1',
-    userName: '',
-    cek: 'wkwkwkwk'
+    userId: userId,
+    userName: userName,
   };
 
   function reducer(state, action) {
@@ -28,6 +30,8 @@ function Router() {
         case 'setUserName':
           // console.log('berhasil dispatch userName', state.userName)
           return {...state, userName: action.payload}
+        case 'ubahcek':
+          return {...state, cek: action.payload}
         default:
           return state
       }
@@ -37,9 +41,9 @@ function Router() {
 
   return (
     <React.StrictMode>
-      <CookiesProvider>
-        <StateContext.Provider value={state}>
-          <ReducerContext.Provider value={dispatch}>
+      <StateContext.Provider value={state}>
+        <ReducerContext.Provider value={dispatch}>
+          <CookiesProvider>
             <BrowserRouter>
               <Route exact path='/' component={Auth}/>
               <Route
@@ -47,9 +51,9 @@ function Router() {
                 component={App}
               />
             </BrowserRouter>
-          </ReducerContext.Provider>
-        </StateContext.Provider>
-      </CookiesProvider>
+          </CookiesProvider>
+        </ReducerContext.Provider>
+      </StateContext.Provider>
     </React.StrictMode>
   )
 };

@@ -1,12 +1,20 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import { Container, Row, Col, Card, Table } from 'react-bootstrap';
 import '../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileInvoiceDollar, faComments } from '@fortawesome/free-solid-svg-icons';
 import { StateContext } from '../index';
+import { ReducerContext } from '../index';
 
 function DashAdmin(props){
     const state = useContext(StateContext)
+    const dispatch = useContext(ReducerContext)
+
+    const [id, setId] = useState(() => {
+        const saved = localStorage.getItem('userId')
+        const initialValue = JSON.parse(saved)
+        return initialValue || ''
+    })
 
     return (
         <div>
@@ -67,8 +75,6 @@ function DashAdmin(props){
                     <Col className='antarmuka-admin-card'>
                     </Col>
                 </Row>
-                <h1> hai {props.namauser}</h1>
-                <button onClick={() => console.log(`nama user: ${state.userId}`)}>cek</button>
             </Container>
             
 

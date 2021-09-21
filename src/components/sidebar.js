@@ -12,6 +12,8 @@ function Sidebar() {
 
     const klikLogout = () => {
         removeToken(['msms-cookie']);
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userName');
     };
 
     useEffect(() => {

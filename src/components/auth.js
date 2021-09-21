@@ -21,16 +21,17 @@ function Auth() {
     .then( resp => {
       dispatch({type: 'setUserId', payload: resp.user_id})
       dispatch({type: 'setUserName', payload: resp.user_name})
+      localStorage.setItem('userId', JSON.stringify(resp.user_id))
+      localStorage.setItem('userName', JSON.stringify(resp.user_name))
       setToken('msms-cookie', resp.token)
     })
     .catch( error => console.log(error))
-
-    console.log(state)
-
   }
 
   useEffect(() => {
-    if(token['msms-cookie']) window.location.href = '/admin';
+    if(token['msms-cookie'] && state.userId && state.userName) {
+      window.location.href = '/admin'
+    };
   }, [token])
 
   return (

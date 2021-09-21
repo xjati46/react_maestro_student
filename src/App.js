@@ -66,7 +66,6 @@ function App() {
   }, [token]);
 
 // EVENT HANDLER
-
   const filterPesanan = pesanan => {
     const userId = state.userId.toString()
     if(userId && pesanan.arsip === false) {
@@ -75,16 +74,6 @@ function App() {
   }
 
   // PESANAN
-  const pesananDitambahkan = pes => {
-    const pesananBaru = [...pesanan, pes];
-    setPesanan(pesananBaru);
-  };
-
-  const pesananDihapus = pesn => {
-    const pesananBaru = pesanan.filter( pes => pes.id !== pesn.id );
-    setPesanan(pesananBaru);
-  };
-
   const pesananDiubah = pesn => {
     const pesananBaru = pesanan.map( pes => {
       if(pes.id === pesn.id) {
@@ -123,8 +112,6 @@ function App() {
                   pelatih={pelatih}
                   siswa={siswa}
                   produk={produk}
-                  pesananDitambahkan={pesananDitambahkan}
-                  pesananDihapus={pesananDihapus}
                   pesananDiubah={pesananDiubah}
                 />
               </Route>

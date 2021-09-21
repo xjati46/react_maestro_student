@@ -5,6 +5,8 @@ import React from 'react';
 
 function Header() {
 
+  const userName = localStorage.getItem('userName')
+
   return (
     <React.Fragment>
 
@@ -16,7 +18,7 @@ function Header() {
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <Navbar.Text>
-              Selamat Datang Admin
+              Selamat Datang {userName}
             </Navbar.Text>
           </Navbar.Collapse>
         </Navbar>
