@@ -21,11 +21,11 @@ function Auth() {
     .then( resp => {
       dispatch({type: 'setUserId', payload: resp.user_id})
       dispatch({type: 'setUserName', payload: resp.user_name})
-      // console.log(state.userId, state.userName)
       setToken('msms-cookie', resp.token)
     })
-    .then(console.log(state))
     .catch( error => console.log(error))
+
+    console.log(state)
 
   }
 

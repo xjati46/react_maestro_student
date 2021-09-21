@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import DashAdmin from './components/dash_admin';
 import Header from './components/header';
@@ -8,8 +8,11 @@ import API from './api_service';
 import { Route, HashRouter } from "react-router-dom";
 import PesananAdmin from './components/pesanan_admin';
 import { useCookies } from 'react-cookie';
+import { StateContext } from './index';
 
 function App() {
+
+  const state = useContext(StateContext)
 
 // STATE
   const [ berita, setBerita ] = useState([]);
@@ -50,7 +53,10 @@ function App() {
     
     API.daftarPesanan(token['msms-cookie'])
     .then( resp => resp.json())
-    .then( resp => setPesanan(resp))
+    .then( resp => {
+      const data = resp.filter(filterPesanan)
+      setPesanan(data)
+    })
     .catch( error => console.log(error));
 
   }, [token]);
@@ -60,6 +66,13 @@ function App() {
   }, [token]);
 
 // EVENT HANDLER
+
+  const filterPesanan = pesanan => {
+    const userId = state.userId.toString()
+    if(userId && pesanan.arsip === false) {
+        return pesanan.id_user === userId
+    }
+  }
 
   // PESANAN
   const pesananDitambahkan = pes => {

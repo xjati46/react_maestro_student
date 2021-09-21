@@ -15,8 +15,9 @@ export const ReducerContext = createContext();
 function Router() {
 
   const initialState = {
-    userId: '',
+    userId: '1',
     userName: '',
+    cek: 'wkwkwkwk'
   };
 
   function reducer(state, action) {

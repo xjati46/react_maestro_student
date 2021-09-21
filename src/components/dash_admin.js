@@ -67,8 +67,8 @@ function DashAdmin(props){
                     <Col className='antarmuka-admin-card'>
                     </Col>
                 </Row>
-                <h1> hai {state.userName}</h1>
-                <button onClick={() => console.log(`nama user: ${state.userName}`)}>cek</button>
+                <h1> hai {props.namauser}</h1>
+                <button onClick={() => console.log(`nama user: ${state.userId}`)}>cek</button>
             </Container>
             
 
