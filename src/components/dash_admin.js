@@ -1,104 +1,79 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Container, Row, Col, Card, Table } from 'react-bootstrap';
 import '../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserAstronaut, faUser, faFileInvoiceDollar, faComments } from '@fortawesome/free-solid-svg-icons';
+import { faFileInvoiceDollar, faComments } from '@fortawesome/free-solid-svg-icons';
+import { StateContext } from '../index';
 
 function DashAdmin(props){
-  return (
-    <div>
+    const state = useContext(StateContext)
 
-        <Container>
-            <Row>
-                <Col className='antarmuka-admin-card'>
-                    <Card>
-                        <Card.Header as="h5">
-                            <FontAwesomeIcon icon={faComments}/> Berita
-                        </Card.Header>
-                        <Card.Body>
-                            <Table striped bordered hover size='sm' className='center-text'>
-                                <thead>
-                                    <tr>
-                                        <th>Waktu</th>
-                                        <th>Judul</th>
-                                        <th>Isi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {props.berita && props.berita.map( berita => {
-                                        return (
-                                            <tr key={berita.id}>
-                                                <td>{berita.waktu_pos}</td>
-                                                <td>{berita.judul}</td>
-                                                <td>{berita.konten}</td>
-                                            </tr>   
-                                        )
-                                    })}
-                                </tbody>
+    return (
+        <div>
 
-                            </Table>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
-            <Row>
-                <Col className='antarmuka-admin-card'>
-                    <Card bg='primary' text='white'>
-                        <Card.Header as="h5">
-                            <Row>
-                                <Col>
-                                    <FontAwesomeIcon icon={faUserAstronaut}/> Jumlah Pelatih
-                                </Col>
-                                <Col xs={3}>
-                                    {props.jumlahPelatih ? 
-                                        <strong>{props.jumlahPelatih.length}</strong> :
-                                        <strong>0</strong>
-                                    }
-                                </Col>
-                            </Row>
-                        </Card.Header>
-                    </Card>
-                </Col>
-                <Col className='antarmuka-admin-card'>
-                    <Card bg='info' text='white'>
-                        <Card.Header as="h5">
-                            <Row>
-                                <Col>
-                                    <FontAwesomeIcon icon={faUser}/> Jumlah Siswa
-                                </Col>
-                                <Col xs={3}>
-                                    {props.jumlahSiswa ? 
-                                        <strong>{props.jumlahSiswa.length}</strong> :
-                                        <strong>0</strong>
-                                    }
-                                </Col>
-                            </Row>
-                        </Card.Header>
-                    </Card>
-                </Col>
-                <Col className='antarmuka-admin-card'>
-                    <Card bg='success' text='white'>
-                        <Card.Header as="h5">
-                            <Row>
-                                <Col>
-                                    <FontAwesomeIcon icon={faFileInvoiceDollar}/> Pesanan Aktif
-                                </Col>
-                                <Col xs={3}>
-                                    {props.jumlahPesanan ? 
-                                        <strong>{props.jumlahPesanan.length}</strong> :
-                                        <strong>0</strong>
-                                    }
-                                </Col>
-                            </Row>
-                        </Card.Header>
-                    </Card>
-                </Col>
-            </Row>
-        </Container>
-        
+            <Container>
+                <Row>
+                    <Col className='antarmuka-admin-card'>
+                        <Card>
+                            <Card.Header as="h5">
+                                <FontAwesomeIcon icon={faComments}/> Berita
+                            </Card.Header>
+                            <Card.Body>
+                                <Table striped bordered hover size='sm' className='center-text'>
+                                    <thead>
+                                        <tr>
+                                            <th>Waktu</th>
+                                            <th>Judul</th>
+                                            <th>Isi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {props.berita && props.berita.map( berita => {
+                                            return (
+                                                <tr key={berita.id}>
+                                                    <td>{berita.waktu_pos}</td>
+                                                    <td>{berita.judul}</td>
+                                                    <td>{berita.konten}</td>
+                                                </tr>   
+                                            )
+                                        })}
+                                    </tbody>
 
-        
-    </div>
+                                </Table>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className='antarmuka-admin-card'>
+                    </Col>
+                    <Col className='antarmuka-admin-card'>
+                        <Card bg='success' text='white'>
+                            <Card.Header as="h5">
+                                <Row>
+                                    <Col>
+                                        <FontAwesomeIcon icon={faFileInvoiceDollar}/> Pesanan Aktif
+                                    </Col>
+                                    <Col xs={3}>
+                                        {props.jumlahPesanan ? 
+                                            <strong>{props.jumlahPesanan.length}</strong> :
+                                            <strong>0</strong>
+                                        }
+                                    </Col>
+                                </Row>
+                            </Card.Header>
+                        </Card>
+                    </Col>
+                    <Col className='antarmuka-admin-card'>
+                    </Col>
+                </Row>
+                <h1> hai {state.userName}</h1>
+                <button onClick={() => console.log(`nama user: ${state.userName}`)}>cek</button>
+            </Container>
+            
+
+            
+        </div>
   )
 }
 

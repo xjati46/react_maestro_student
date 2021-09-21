@@ -1,6 +1,6 @@
 import { Navbar, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faUserAstronaut, faUser, faFileInvoiceDollar, faSignOutAlt, faTicketAlt } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faFileInvoiceDollar, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import React, { useEffect } from 'react';
 import { NavLink } from "react-router-dom";
 import '../App.css';
@@ -26,24 +26,6 @@ function Sidebar() {
                         <div>
                             <FontAwesomeIcon icon={faHome} size='2x'/>
                             Beranda
-                        </div>
-                    </Nav.Link>
-                    <Nav.Link as={NavLink} to='/produk' replace>
-                        <div>
-                            <FontAwesomeIcon icon={faTicketAlt} size='2x'/>
-                            Produk
-                        </div>
-                    </Nav.Link>
-                    <Nav.Link as={NavLink} to='/pelatih' replace>
-                        <div>
-                            <FontAwesomeIcon icon={faUserAstronaut} size='2x'/>
-                            Pelatih
-                        </div>
-                    </Nav.Link>
-                    <Nav.Link as={NavLink} to='/siswa' replace>
-                        <div>
-                            <FontAwesomeIcon icon={faUser} size='2x'/>
-                            Siswa
                         </div>
                     </Nav.Link>
                     <Nav.Link as={NavLink} to='/pesanan' replace>

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Row, Col, Form, Table, Button, Modal } from 'react-bootstrap';
 import '../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash, faPlus, faCheck, faCalendarMinus } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faCheck, faCalendarMinus } from '@fortawesome/free-solid-svg-icons';
 import NumberFormat from 'react-number-format';
 import API from '../api_service';
 import moment from 'moment';
@@ -17,10 +17,7 @@ import { useCookies } from 'react-cookie';
 function PesananAdmin(props) {
   
   /// STATE
-  const [modal, setModal] = useState(false);
-  const [modalHapus, setModalHapus] = useState(false);
   const [modalUbah, setModalUbah] = useState(false);
-  const [pilihPesananDihapus, setPilihPesananDihapus] = useState({});
   const [pilihPesananDiubah, setPilihPesananDiubah] = useState({});
 
   const [munculTanggal, setMunculTanggal] = useState(true);
@@ -53,49 +50,14 @@ function PesananAdmin(props) {
   const [token] = useCookies(['msms-cookie']);
 
   /// EVENT HANDLER
-  const handlerMuncul = () => {
-    setModal(true)
-    setSiswa('');
-    setPelatih('');
-    setProduk('');
-    setDiskon('0');
-    setTglBayar('');
-    setTglHabis('');
-  };
-  const handlerTutup = () => setModal(false);
-
-  const klikHapusPesanan = pesanan => {
-    setPilihPesananDihapus(pesanan);
-    setModalHapus(true);
-  };
-
+  
   const klikUbahPesanan = pesanan => {
     setPilihPesananDiubah(pesanan);
     setModalUbah(true);
   };
 
 // API CALLS
-  const klikTambah = () => {
-    API.tambahPesanan({
-      siswa: siswa,
-      pelatih: pelatih,
-      produk: produk,
-      diskon: diskon,
-      tgl_transaksi: tglBayar,
-      tgl_habis: tglHabis
-    }, token['msms-cookie'])
-    .then(resp => props.pesananDitambahkan(resp))
-    .then(setModal(false))
-    .catch(error => console.log(error))
-  };
-
-  const klikHapus = pesanan => {
-    API.hapusPesanan(pesanan.id, token['msms-cookie'])
-    .then( () => props.pesananDihapus(pesanan))
-    .then(setModalHapus(false))
-    .catch( error => console.log(error));
-  };
-
+  
   const klikUbah = pesanan => {
     API.ubahPesanan(pesanan.id, {
       siswa: siswa,
@@ -368,11 +330,6 @@ function PesananAdmin(props) {
         onClick={() => klikUbahPesanan(pesanan)}
         title='Ubah Pesanan'
       /> 
-      <FontAwesomeIcon
-        icon={faTrash}
-        onClick={() => klikHapusPesanan(pesanan)}
-        title='Hapus Pesanan'
-      />
     </div>
 
     return container
@@ -392,10 +349,7 @@ function PesananAdmin(props) {
   return (
     <div>
       <Row className="mb-2">
-        <Col xs={2} className="mt-2">
-          <Button variant="success" onClick={handlerMuncul}>
-            <FontAwesomeIcon icon={faPlus}/> Tambah Pesanan
-          </Button>
+        <Col xs={2}>
         </Col>
 
         <Col>
@@ -432,204 +386,6 @@ function PesananAdmin(props) {
         filterPosition='bottom'
         classes='center-text small-text'
       />
-      {/* <Container>
-        
-        <Row className='antarmuka-admin-card'>
-          <Button variant="success" onClick={handlerMuncul}>
-            <FontAwesomeIcon icon={faPlus}/> Tambah Pesanan
-          </Button>
-        </Row>
-        <Row className='antarmuka-admin-card'>
-          <Table striped bordered hover size='sm' className='center-text small-text'>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Kode Pesanan</th>
-                <th>Status</th>
-                <th>Nama Siswa</th>
-                <th>Produk</th>
-                <th>Nilai Transaksi</th>
-                <th>Masa Berlaku</th>
-                <th>Nama Pelatih</th>
-                <th>Tanggal Latihan</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              {props.pesanan && props.pesanan.map( (pesanan, index) => {
-                return (
-                  <tr key={pesanan.id}>
-                    <td className='align-middle'>{index+1}</td>
-                    <td className='align-middle'>{pesanan.__str__}</td>
-                    <td className='align-middle'>{pesanan.arsip ?  <strong className="text-danger">PASIF</strong> : <strong className="text-success">AKTIF</strong>}</td>
-                    <td className='align-middle'>{pesanan.nama_siswa}</td>
-                    <td className='align-middle'>{pesanan.nama_produk}</td>
-                    <td className='align-middle'>
-                      <NumberFormat
-                        thousandSeparator={'.'}
-                        decimalSeparator={','}
-                        prefix={'Rp '}
-                        displayType={'text'} value={pesanan.nilai_transaksi}
-                      />
-                      {pesanan.diskon ? <sup><em> disc. {pesanan.diskon * 100}%</em></sup> : null} 
-                    </td>
-                    {pesanan.status_habis ?
-                      <td className='red align-middle'><strong>HABIS! <br/> {moment(pesanan.tgl_habis).format('LL')}</strong></td> :
-                      <td className='align-middle'>{moment(pesanan.tgl_transaksi).format('LL')} <br/> {moment(pesanan.tgl_habis).format('LL')}</td>}
-
-                    {pesanan.nama_pelatih ?
-                      <td className='align-middle'>Coach {pesanan.nama_pelatih}</td> : <td></td>}
-                    
-
-                    <td className='align-middle'>
-                      {
-                      pesanan.produk_pert === 1 ? <div>
-                        {pesanan.p1 ? moment(pesanan.p1).format('LL') : '(---)'} {pesanan.p1_c ? <FontAwesomeIcon icon={faCheck}/> : null}
-                        </div> :
-                      pesanan.produk_pert === 4 ? <div>
-                        {pesanan.p1 ? moment(pesanan.p1).format('LL') : '(---)'} {pesanan.p1_c ? <FontAwesomeIcon icon={faCheck}/> : null}<br/>
-                        {pesanan.p2 ? moment(pesanan.p2).format('LL') : '(---)'} {pesanan.p2_c ? <FontAwesomeIcon icon={faCheck}/> : null}<br/>
-                        {pesanan.p3 ? moment(pesanan.p3).format('LL') : '(---)'} {pesanan.p3_c ? <FontAwesomeIcon icon={faCheck}/> : null}<br/>
-                        {pesanan.p4 ? moment(pesanan.p4).format('LL') : '(---)'} {pesanan.p4_c ? <FontAwesomeIcon icon={faCheck}/> : null}
-                        </div> :
-                      pesanan.produk_pert === 8 ? <div>
-                        {pesanan.p1 ? moment(pesanan.p1).format('LL') : '(---)'} {pesanan.p1_c ? <FontAwesomeIcon icon={faCheck}/> : null}<br/> 
-                        {pesanan.p2 ? moment(pesanan.p2).format('LL') : '(---)'} {pesanan.p2_c ? <FontAwesomeIcon icon={faCheck}/> : null}<br/> 
-                        {pesanan.p3 ? moment(pesanan.p3).format('LL') : '(---)'} {pesanan.p3_c ? <FontAwesomeIcon icon={faCheck}/> : null}<br/> 
-                        {pesanan.p4 ? moment(pesanan.p4).format('LL') : '(---)'} {pesanan.p4_c ? <FontAwesomeIcon icon={faCheck}/> : null}<br/> 
-                        {pesanan.p5 ? moment(pesanan.p5).format('LL') : '(---)'} {pesanan.p5_c ? <FontAwesomeIcon icon={faCheck}/> : null}<br/> 
-                        {pesanan.p6 ? moment(pesanan.p6).format('LL') : '(---)'} {pesanan.p6_c ? <FontAwesomeIcon icon={faCheck}/> : null}<br/> 
-                        {pesanan.p7 ? moment(pesanan.p7).format('LL') : '(---)'} {pesanan.p7_c ? <FontAwesomeIcon icon={faCheck}/> : null}<br/> 
-                        {pesanan.p8 ? moment(pesanan.p8).format('LL') : '(---)'} {pesanan.p8_c ? <FontAwesomeIcon icon={faCheck}/> : null}
-                        </div>
-                      : null
-                      }
-                    </td>
-                    <td className='align-middle'>
-                      <FontAwesomeIcon
-                        icon={faEdit}
-                        onClick={() => klikUbahPesanan(pesanan)}
-                        title='Ubah Pesanan'
-                      /> 
-                      <FontAwesomeIcon
-                        icon={faTrash}
-                        onClick={() => klikHapusPesanan(pesanan)}
-                        title='Hapus Pesanan'
-                      />
-                    </td>
-                  </tr>   
-                )
-              })}
-            </tbody>
-          </Table>
-        </Row>
-      </Container> */}
-
-      <Modal show={modal} onHide={handlerTutup}>
-        <Modal.Header closeButton>
-          <Modal.Title>Tambah Pesanan</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          
-          <Form>
-            <Form.Row>
-              <Col>
-                <Form.Group controlId="siswa">
-                  <Form.Label>Nama Siswa</Form.Label>
-                  <Form.Control as="select" value={siswa} onChange={evt => setSiswa(evt.target.value)}>
-                    <option value=''>-----</option>
-                    {props.siswa && props.siswa.map( x => {
-                      return (
-                        <option value={x.id} key={x.id}>{x.nama_lengkap}</option>  
-                      )
-                    })}
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-
-              <Col>
-                <Form.Group controlId="pelatih">
-                  <Form.Label>Nama Pelatih</Form.Label>
-                  <Form.Control as="select" value={pelatih} onChange={evt => setPelatih(evt.target.value)}>
-                    <option value=''>-----</option>
-                    {props.pelatih && props.pelatih.map( x => {
-                      return (
-                        <option value={x.id} key={x.id}>{x.nama_panggilan}</option>  
-                      )
-                    })}
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-            </Form.Row>
-            
-            <Form.Row>
-              <Col>
-                <Form.Group controlId="produk">
-                  <Form.Label>Nama Produk</Form.Label>
-                  <Form.Control as="select" value={produk} onChange={evt => setProduk(evt.target.value)}>
-                    <option value=''>-----</option>
-                    {props.produk && props.produk.map( x => {
-                      return (
-                        <option value={x.id} key={x.id}>{x.nama_produk}</option>  
-                      )
-                    })}
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-
-              <Col>
-                <Form.Group controlId="diskon">
-                  <Form.Label>Diskon</Form.Label>
-                  <Form.Control type="number" step='0.01' value={diskon} onChange={evt => setDiskon(evt.target.value)}/>
-                </Form.Group>
-              </Col>
-            </Form.Row>
-            
-            <Form.Row>
-              <Col>
-                <Form.Group controlId="tglBayar">
-                  <Form.Label>Tanggal Bayar</Form.Label>
-                  <Form.Control type='date' value={tglBayar} onChange={evt => setTglBayar(evt.target.value)}/>
-                </Form.Group>
-              </Col>
-
-              <Col>
-                <Form.Group controlId="tglHabis">
-                  <Form.Label>Tanggal Habis</Form.Label>
-                  <Form.Control type='date' value={tglHabis} onChange={evt => setTglHabis(evt.target.value)}/>
-                </Form.Group>
-              </Col>
-            </Form.Row>
-
-          </Form>
-
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handlerTutup}>
-            Batal
-          </Button>
-          <Button variant="success" onClick={klikTambah}>
-            Simpan
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-      <Modal show={modalHapus} onHide={() => setModalHapus(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Hapus Pesanan</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Yakin hapus <strong>{pilihPesananDihapus.__str__}</strong>?
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setModalHapus(false)}>
-            Batal
-          </Button>
-          <Button variant="danger" onClick={() => klikHapus(pilihPesananDihapus)}>
-            Hapus
-          </Button>
-        </Modal.Footer>
-      </Modal>
 
       <Modal show={modalUbah} onHide={() => {setPilihPesananDiubah({}); setModalUbah(false)}} size="lg">
         <Modal.Header closeButton>
@@ -643,7 +399,7 @@ function PesananAdmin(props) {
                   <Col>
                     <Form.Group controlId="siswa">
                       <Form.Label>Nama Siswa</Form.Label>
-                      <Form.Control as="select" value={siswa} onChange={evt => setSiswa(evt.target.value)}>
+                      <Form.Control as="select" value={siswa} onChange={evt => setSiswa(evt.target.value)} disabled>
                         <option value=''>-----</option>
                         {props.siswa && props.siswa.map( x => {
                           return (
@@ -657,7 +413,7 @@ function PesananAdmin(props) {
                   <Col>
                     <Form.Group controlId="pelatih">
                       <Form.Label>Nama Pelatih</Form.Label>
-                      <Form.Control as="select" value={pelatih} onChange={evt => setPelatih(evt.target.value)}>
+                      <Form.Control as="select" value={pelatih} onChange={evt => setPelatih(evt.target.value)} disabled>
                         <option value=''>-----</option>
                         {props.pelatih && props.pelatih.map( x => {
                           return (
@@ -673,7 +429,7 @@ function PesananAdmin(props) {
                   <Col>
                     <Form.Group controlId="produk">
                       <Form.Label>Nama Produk</Form.Label>
-                      <Form.Control as="select" value={produk} onChange={evt => setProduk(evt.target.value)}>
+                      <Form.Control as="select" value={produk} onChange={evt => setProduk(evt.target.value)} disabled>
                         <option value=''>-----</option>
                         {props.produk && props.produk.map( x => {
                           return (
@@ -687,7 +443,7 @@ function PesananAdmin(props) {
                   <Col>
                     <Form.Group controlId="diskon">
                       <Form.Label>Diskon</Form.Label>
-                      <Form.Control type="number" step='0.01' value={diskon} onChange={evt => setDiskon(evt.target.value)}/>
+                      <Form.Control type="number" step='0.01' value={diskon} onChange={evt => setDiskon(evt.target.value)} disabled/>
                     </Form.Group>
                   </Col>
                 </Form.Row>
@@ -696,14 +452,14 @@ function PesananAdmin(props) {
                   <Col xs={6}>
                     <Form.Group controlId="tglBayar">
                       <Form.Label>Tanggal Bayar</Form.Label>
-                      <Form.Control type='date' value={tglBayar} onChange={evt => setTglBayar(evt.target.value)}/>
+                      <Form.Control type='date' value={tglBayar} onChange={evt => setTglBayar(evt.target.value)} disabled/>
                     </Form.Group>
                   </Col>
 
                   <Col xs={6}>
                     <Form.Group controlId="tglHabis">
                       <Form.Label>Tanggal Habis</Form.Label>
-                      <Form.Control type='date' value={tglHabis} onChange={evt => setTglHabis(evt.target.value)}/>
+                      <Form.Control type='date' value={tglHabis} onChange={evt => setTglHabis(evt.target.value)} disabled/>
                     </Form.Group>
                   </Col>
                 </Form.Row>
@@ -724,6 +480,7 @@ function PesananAdmin(props) {
                       }}
                     label={arsip ? <strong className="text-danger">PASIF</strong> : <strong className="text-success">AKTIF</strong>}
                     checked={arsip ? false : true}
+                    disabled
                   />
                 </Form.Group>
 
@@ -743,30 +500,18 @@ function PesananAdmin(props) {
                         <td>1</td>
                         <td>
                           <Form.Group controlId="p1">
-                            <Form.Control type='date' value={p1 ? p1 : ""} onChange={evt => setP1(evt.target.value)}/>
+                            <Form.Control type='date' value={p1 ? p1 : ""} onChange={evt => setP1(evt.target.value)} disabled={p1c ? true : false}/>
                           </Form.Group>  
                         </td>
                         <td>
                           <Row>
                             <Col className='text-center'>
-                              <FontAwesomeIcon
-                                icon={faCalendarMinus}
-                                onClick={() => setP1(null)}
-                              />
-                            </Col>
-                            <Col className='text-center'>
-                              <Form.Check
-                                type="checkbox"
-                                name="p1"
-                                value={p1c}
-                                checked={p1c}
-                                onChange={() => {
-                                  if(p1c){
-                                    return setP1c(false)
-                                  } else {
-                                    return setP1c(true)
-                                  }}}
-                              />
+                              {p1c ? null :
+                                <FontAwesomeIcon
+                                  icon={faCalendarMinus}
+                                  onClick={() => setP1(null)}
+                                />
+                              }
                             </Col>
                           </Row>
                         </td>
@@ -791,30 +536,18 @@ function PesananAdmin(props) {
                         <td>1</td>
                         <td>
                           <Form.Group controlId="p1">
-                            <Form.Control type='date' value={p1 ? p1 : ""} onChange={evt => setP1(evt.target.value)}/>
+                            <Form.Control type='date' value={p1 ? p1 : ""} onChange={evt => setP1(evt.target.value)} disabled={p1c ? true : false}/>
                           </Form.Group>  
                         </td>
                         <td>
                           <Row>
                             <Col className='text-center'>
-                              <FontAwesomeIcon
-                                icon={faCalendarMinus}
-                                onClick={() => setP1(null)}
-                              />
-                            </Col>
-                            <Col className='text-center'>
-                              <Form.Check
-                                type="checkbox"
-                                name="p1"
-                                value={p1c}
-                                checked={p1c}
-                                onChange={() => {
-                                  if(p1c){
-                                    return setP1c(false)
-                                  } else {
-                                    return setP1c(true)
-                                  }}}
-                              />
+                              {p1c ? null :
+                                <FontAwesomeIcon
+                                  icon={faCalendarMinus}
+                                  onClick={() => setP1(null)}
+                                />
+                              }
                             </Col>
                           </Row>
                         </td>
@@ -823,30 +556,18 @@ function PesananAdmin(props) {
                         <td>2</td>
                         <td>
                           <Form.Group controlId="p2">
-                            <Form.Control type='date' value={p2 ? p2 : ""} onChange={evt => setP2(evt.target.value)}/>
+                            <Form.Control type='date' value={p2 ? p2 : ""} onChange={evt => setP2(evt.target.value)} disabled={p2c ? true : false}/>
                           </Form.Group>  
                         </td>
                         <td>
                           <Row>
                             <Col className='text-center'>
-                              <FontAwesomeIcon
-                                icon={faCalendarMinus}
-                                onClick={() => setP2(null)}
-                              />
-                            </Col>
-                            <Col className='text-center'>
-                              <Form.Check
-                                type="checkbox"
-                                name="p2"
-                                value={p2c}
-                                checked={p2c}
-                                onChange={() => {
-                                  if(p2c){
-                                    return setP2c(false)
-                                  } else {
-                                    return setP2c(true)
-                                  }}}
-                              />
+                              {p2c ? null :
+                                <FontAwesomeIcon
+                                  icon={faCalendarMinus}
+                                  onClick={() => setP2(null)}
+                                />
+                              }
                             </Col>
                           </Row>
                         </td>
@@ -855,30 +576,18 @@ function PesananAdmin(props) {
                         <td>3</td>
                         <td>
                           <Form.Group controlId="p3">
-                            <Form.Control type='date' value={p3 ? p3 : ""} onChange={evt => setP3(evt.target.value)}/>
+                            <Form.Control type='date' value={p3 ? p3 : ""} onChange={evt => setP3(evt.target.value)} disabled={p3c ? true : false}/>
                           </Form.Group>  
                         </td>
                         <td>
                           <Row>
                             <Col className='text-center'>
-                              <FontAwesomeIcon
-                                icon={faCalendarMinus}
-                                onClick={() => setP3(null)}
-                              />
-                            </Col>
-                            <Col className='text-center'>
-                              <Form.Check
-                                type="checkbox"
-                                name="p3"
-                                value={p3c}
-                                checked={p3c}
-                                onChange={() => {
-                                  if(p3c){
-                                    return setP3c(false)
-                                  } else {
-                                    return setP3c(true)
-                                  }}}
-                              />
+                              {p3c ? null :
+                                <FontAwesomeIcon
+                                  icon={faCalendarMinus}
+                                  onClick={() => setP3(null)}
+                                />
+                              }
                             </Col>
                           </Row>
                         </td>
@@ -887,30 +596,18 @@ function PesananAdmin(props) {
                         <td>4</td>
                         <td>
                           <Form.Group controlId="p4">
-                            <Form.Control type='date' value={p4 ? p4 : ""} onChange={evt => setP4(evt.target.value)}/>
+                            <Form.Control type='date' value={p4 ? p4 : ""} onChange={evt => setP4(evt.target.value)} disabled={p4c ? true : false}/>
                           </Form.Group>  
                         </td>
                         <td>
                           <Row>
                             <Col className='text-center'>
-                              <FontAwesomeIcon
-                                icon={faCalendarMinus}
-                                onClick={() => setP4(null)}
-                              />
-                            </Col>
-                            <Col className='text-center'>
-                              <Form.Check
-                                type="checkbox"
-                                name="p4"
-                                value={p4c}
-                                checked={p4c}
-                                onChange={() => {
-                                  if(p4c){
-                                    return setP4c(false)
-                                  } else {
-                                    return setP4c(true)
-                                  }}}
-                              />
+                              {p4c ? null :
+                                <FontAwesomeIcon
+                                  icon={faCalendarMinus}
+                                  onClick={() => setP4(null)}
+                                />
+                              }
                             </Col>
                           </Row>
                         </td>
@@ -935,30 +632,18 @@ function PesananAdmin(props) {
                         <td>1</td>
                         <td>
                           <Form.Group controlId="p1">
-                            <Form.Control type='date' value={p1 ? p1 : ""} onChange={evt => setP1(evt.target.value)}/>
+                            <Form.Control type='date' value={p1 ? p1 : ""} onChange={evt => setP1(evt.target.value)} disabled={p1c ? true : false}/>
                           </Form.Group>  
                         </td>
                         <td>
                           <Row>
                             <Col className='text-center'>
-                              <FontAwesomeIcon
-                                icon={faCalendarMinus}
-                                onClick={() => setP1(null)}
-                              />
-                            </Col>
-                            <Col className='text-center'>
-                              <Form.Check
-                                type="checkbox"
-                                name="p1"
-                                value={p1c}
-                                checked={p1c}
-                                onChange={() => {
-                                  if(p1c){
-                                    return setP1c(false)
-                                  } else {
-                                    return setP1c(true)
-                                  }}}
-                              />
+                              {p1c ? null :
+                                <FontAwesomeIcon
+                                  icon={faCalendarMinus}
+                                  onClick={() => setP1(null)}
+                                />
+                              }
                             </Col>
                           </Row>
                         </td>
@@ -967,30 +652,18 @@ function PesananAdmin(props) {
                         <td>2</td>
                         <td>
                           <Form.Group controlId="p2">
-                            <Form.Control type='date' value={p2 ? p2 : ""} onChange={evt => setP2(evt.target.value)}/>
+                            <Form.Control type='date' value={p2 ? p2 : ""} onChange={evt => setP2(evt.target.value)} disabled={p2c ? true : false}/>
                           </Form.Group>  
                         </td>
                         <td>
                           <Row>
                             <Col className='text-center'>
-                              <FontAwesomeIcon
-                                icon={faCalendarMinus}
-                                onClick={() => setP2(null)}
-                              />
-                            </Col>
-                            <Col className='text-center'>
-                              <Form.Check
-                                type="checkbox"
-                                name="p2"
-                                value={p2c}
-                                checked={p2c}
-                                onChange={() => {
-                                  if(p2c){
-                                    return setP2c(false)
-                                  } else {
-                                    return setP2c(true)
-                                  }}}
-                              />
+                              {p2c ? null :
+                                <FontAwesomeIcon
+                                  icon={faCalendarMinus}
+                                  onClick={() => setP2(null)}
+                                />
+                              }
                             </Col>
                           </Row>
                         </td>
@@ -999,30 +672,18 @@ function PesananAdmin(props) {
                         <td>3</td>
                         <td>
                           <Form.Group controlId="p3">
-                            <Form.Control type='date' value={p3 ? p3 : ""} onChange={evt => setP3(evt.target.value)}/>
+                            <Form.Control type='date' value={p3 ? p3 : ""} onChange={evt => setP3(evt.target.value)} disabled={p3c ? true : false}/>
                           </Form.Group>  
                         </td>
                         <td>
                           <Row>
                             <Col className='text-center'>
-                              <FontAwesomeIcon
-                                icon={faCalendarMinus}
-                                onClick={() => setP3(null)}
-                              />
-                            </Col>
-                            <Col className='text-center'>
-                              <Form.Check
-                                type="checkbox"
-                                name="p3"
-                                value={p3c}
-                                checked={p3c}
-                                onChange={() => {
-                                  if(p3c){
-                                    return setP3c(false)
-                                  } else {
-                                    return setP3c(true)
-                                  }}}
-                              />
+                              {p3c ? null :
+                                <FontAwesomeIcon
+                                  icon={faCalendarMinus}
+                                  onClick={() => setP3(null)}
+                                />
+                              }
                             </Col>
                           </Row>
                         </td>
@@ -1031,30 +692,18 @@ function PesananAdmin(props) {
                         <td>4</td>
                         <td>
                           <Form.Group controlId="p4">
-                            <Form.Control type='date' value={p4 ? p4 : ""} onChange={evt => setP4(evt.target.value)}/>
+                            <Form.Control type='date' value={p4 ? p4 : ""} onChange={evt => setP4(evt.target.value)} disabled={p4c ? true : false}/>
                           </Form.Group>  
                         </td>
                         <td>
                           <Row>
                             <Col className='text-center'>
-                              <FontAwesomeIcon
-                                icon={faCalendarMinus}
-                                onClick={() => setP4(null)}
-                              />
-                            </Col>
-                            <Col className='text-center'>
-                              <Form.Check
-                                type="checkbox"
-                                name="p4"
-                                value={p4c}
-                                checked={p4c}
-                                onChange={() => {
-                                  if(p4c){
-                                    return setP4c(false)
-                                  } else {
-                                    return setP4c(true)
-                                  }}}
-                              />
+                              {p4c ? null :
+                                <FontAwesomeIcon
+                                  icon={faCalendarMinus}
+                                  onClick={() => setP4(null)}
+                                />
+                              }
                             </Col>
                           </Row>
                         </td>
@@ -1063,30 +712,18 @@ function PesananAdmin(props) {
                         <td>5</td>
                         <td>
                           <Form.Group controlId="p5">
-                            <Form.Control type='date' value={p5 ? p5 : ""} onChange={evt => setP5(evt.target.value)}/>
+                            <Form.Control type='date' value={p5 ? p5 : ""} onChange={evt => setP5(evt.target.value)} disabled={p5c ? true : false}/>
                           </Form.Group>  
                         </td>
                         <td>
                           <Row>
                             <Col className='text-center'>
-                              <FontAwesomeIcon
-                                icon={faCalendarMinus}
-                                onClick={() => setP5(null)}
-                              />
-                            </Col>
-                            <Col className='text-center'>
-                              <Form.Check
-                                type="checkbox"
-                                name="p5"
-                                value={p5c}
-                                checked={p5c}
-                                onChange={() => {
-                                  if(p5c){
-                                    return setP5c(false)
-                                  } else {
-                                    return setP5c(true)
-                                  }}}
-                              />
+                              {p5c ? null :
+                                <FontAwesomeIcon
+                                  icon={faCalendarMinus}
+                                  onClick={() => setP5(null)}
+                                />
+                              }
                             </Col>
                           </Row>
                         </td>
@@ -1095,30 +732,18 @@ function PesananAdmin(props) {
                         <td>6</td>
                         <td>
                           <Form.Group controlId="p6">
-                            <Form.Control type='date' value={p6 ? p6 : ""} onChange={evt => setP6(evt.target.value)}/>
+                            <Form.Control type='date' value={p6 ? p6 : ""} onChange={evt => setP6(evt.target.value)} disabled={p6c ? true : false}/>
                           </Form.Group>  
                         </td>
                         <td>
                           <Row>
                             <Col className='text-center'>
-                              <FontAwesomeIcon
-                                icon={faCalendarMinus}
-                                onClick={() => setP6(null)}
-                              />
-                            </Col>
-                            <Col className='text-center'>
-                              <Form.Check
-                                type="checkbox"
-                                name="p6"
-                                value={p6c}
-                                checked={p6c}
-                                onChange={() => {
-                                  if(p6c){
-                                    return setP6c(false)
-                                  } else {
-                                    return setP6c(true)
-                                  }}}
-                              />
+                              {p6c ? null :
+                                <FontAwesomeIcon
+                                  icon={faCalendarMinus}
+                                  onClick={() => setP6(null)}
+                                />
+                              }
                             </Col>
                           </Row>
                         </td>
@@ -1127,30 +752,18 @@ function PesananAdmin(props) {
                         <td>7</td>
                         <td>
                           <Form.Group controlId="p7">
-                            <Form.Control type='date' value={p7 ? p7 : ""} onChange={evt => setP7(evt.target.value)}/>
+                            <Form.Control type='date' value={p7 ? p7 : ""} onChange={evt => setP7(evt.target.value)} disabled={p7c ? true : false}/>
                           </Form.Group>  
                         </td>
                         <td>
                           <Row>
                             <Col className='text-center'>
-                              <FontAwesomeIcon
-                                icon={faCalendarMinus}
-                                onClick={() => setP7(null)}
-                              />
-                            </Col>
-                            <Col className='text-center'>
-                              <Form.Check
-                                type="checkbox"
-                                name="p7"
-                                value={p7c}
-                                checked={p7c}
-                                onChange={() => {
-                                  if(p7c){
-                                    return setP7c(false)
-                                  } else {
-                                    return setP7c(true)
-                                  }}}
-                              />
+                              {p7c ? null :
+                                <FontAwesomeIcon
+                                  icon={faCalendarMinus}
+                                  onClick={() => setP7(null)}
+                                />
+                              }
                             </Col>
                           </Row>
                         </td>
@@ -1159,30 +772,18 @@ function PesananAdmin(props) {
                         <td>8</td>
                         <td>
                           <Form.Group controlId="p8">
-                            <Form.Control type='date' value={p8 ? p8 : ""} onChange={evt => setP8(evt.target.value)}/>
+                            <Form.Control type='date' value={p8 ? p8 : ""} onChange={evt => setP8(evt.target.value)} disabled={p8c ? true : false}/>
                           </Form.Group>  
                         </td>
                         <td>
                           <Row>
                             <Col className='text-center'>
-                              <FontAwesomeIcon
-                                icon={faCalendarMinus}
-                                onClick={() => setP8(null)}
-                              />
-                            </Col>
-                            <Col className='text-center'>
-                              <Form.Check
-                                type="checkbox"
-                                name="p8"
-                                value={p8c}
-                                checked={p8c}
-                                onChange={() => {
-                                  if(p8c){
-                                    return setP8c(false)
-                                  } else {
-                                    return setP8c(true)
-                                  }}}
-                              />
+                              {p8c ? null :
+                                <FontAwesomeIcon
+                                  icon={faCalendarMinus}
+                                  onClick={() => setP8(null)}
+                                />
+                              }
                             </Col>
                           </Row>
                         </td>

@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import logo from '../mswim.png'
 import API from '../api_service'
 import { useCookies } from 'react-cookie'
+import { ReducerContext } from '../index'
+import { StateContext } from '../index'
 
 function Auth() {
+
+  const dispatch = useContext(ReducerContext)
+  const state = useContext(StateContext)
 
   const [ username, setUsername ] = useState('')
   const [ password, setPassword ] = useState('')
@@ -13,8 +18,15 @@ function Auth() {
   const loginClicked = e => {
     e.preventDefault()
     API.loginUser({username, password})
-    .then( resp => setToken('msms-cookie', resp.token))
+    .then( resp => {
+      dispatch({type: 'setUserId', payload: resp.user_id})
+      dispatch({type: 'setUserName', payload: resp.user_name})
+      // console.log(state.userId, state.userName)
+      setToken('msms-cookie', resp.token)
+    })
+    .then(console.log(state))
     .catch( error => console.log(error))
+
   }
 
   useEffect(() => {

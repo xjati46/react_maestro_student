@@ -6,10 +6,7 @@ import Header from './components/header';
 import Sidebar from './components/sidebar';
 import API from './api_service';
 import { Route, HashRouter } from "react-router-dom";
-import PelatihAdmin from './components/pelatih_admin';
-import SiswaAdmin from './components/siswa_admin';
 import PesananAdmin from './components/pesanan_admin';
-import ProdukAdmin from './components/produk_admin';
 import { useCookies } from 'react-cookie';
 
 function App() {
@@ -64,69 +61,6 @@ function App() {
 
 // EVENT HANDLER
 
-  // PRODUK
-  const produkDitambahkan = prod => {
-    const produkBaru = [...produk, prod];
-    setProduk(produkBaru);
-  };
-
-  const produkDihapus = prod => {
-    const produkBaru = produk.filter( pdk => pdk.id !== prod.id );
-    setProduk(produkBaru);
-  };
-
-  const produkDiubah = prod => {
-    const produkBaru = produk.map( pdk => {
-      if(pdk.id === prod.id) {
-        return prod;
-      }
-      return pdk;
-    });
-    setProduk(produkBaru);
-  };
-
-  // PELATIH
-  const pelatihDitambahkan = pel => {
-    const pelatihBaru = [...pelatih, pel];
-    setPelatih(pelatihBaru);
-  };
-
-  const pelatihDiubah = pelat => {
-    const pelatihBaru = pelatih.map( pel => {
-      if(pel.id === pelat.id) {
-        return pelat;
-      }
-      return pel;
-    });
-    setPelatih(pelatihBaru);
-  };
-
-  const pelatihDihapus = pelat => {
-    const pelatihBaru = pelatih.filter( pel => pel.id !== pelat.id );
-    setPelatih(pelatihBaru);
-  };
-
-  // SISWA
-  const siswaDitambahkan = sis => {
-    const siswaBaru = [...siswa, sis];
-    setSiswa(siswaBaru);
-  };
-
-  const siswaDiubah = sisw => {
-    const siswaBaru = siswa.map( sis => {
-      if(sis.id === sisw.id) {
-        return sisw;
-      }
-      return sis;
-    });
-    setSiswa(siswaBaru);
-  };
-
-  const siswaDihapus = sisw => {
-    const siswaBaru = siswa.filter( sis => sis.id !== sisw.id );
-    setSiswa(siswaBaru);
-  };
-
   // PESANAN
   const pesananDitambahkan = pes => {
     const pesananBaru = [...pesanan, pes];
@@ -168,32 +102,6 @@ function App() {
                   jumlahPelatih={pelatih}
                   jumlahSiswa={siswa}
                   jumlahPesanan={pesanan}
-                />
-              </Route>
-              
-              <Route path="/produk">
-                <ProdukAdmin
-                  produk={produk}
-                  produkDitambahkan={produkDitambahkan}
-                  produkDihapus={produkDihapus}
-                  produkDiubah={produkDiubah}
-                />
-              </Route>
-              <Route path="/pelatih">
-                <PelatihAdmin
-                  pelatih={pelatih}
-                  user={user}
-                  pelatihDitambahkan={pelatihDitambahkan}
-                  pelatihDihapus={pelatihDihapus}
-                  pelatihDiubah={pelatihDiubah}
-                />
-              </Route>
-              <Route path="/siswa">
-                <SiswaAdmin
-                  siswa={siswa}
-                  siswaDitambahkan={siswaDitambahkan}
-                  siswaDihapus={siswaDihapus}
-                  siswaDiubah={siswaDiubah}
                 />
               </Route>
               <Route path="/pesanan">
