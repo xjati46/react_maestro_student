@@ -1,11 +1,15 @@
 // const TOKEN = 'fb5ec5875f75a4cb52f2a523a2f3be5c4451421d'
+const devPath = 'http://127.0.0.1:8000/api';
+const buildPath = 'https://dj-maestro.herokuapp.com/api';
+const usePath = devPath
 
 export default class API {
 
     // BERITA
     static updateBerita(token) {
         // return fetch('https://127.0.0.1:8000/api/berita/', {
-        return fetch('https://dj-maestro.herokuapp.com/api/berita/', {
+        // return fetch('https://dj-maestro.herokuapp.com/api/berita/', {
+        return fetch(`${usePath}/berita/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -17,7 +21,8 @@ export default class API {
     // USER
     static daftarUser(token) {
         // return fetch('https://127.0.0.1:8000/api/users/', {
-        return fetch('https://dj-maestro.herokuapp.com/api/users/', {
+        // return fetch('https://dj-maestro.herokuapp.com/api/users/', {
+        return fetch(`${usePath}/users/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -29,7 +34,8 @@ export default class API {
     // PRODUK
     static daftarProduk(token) {
         // return fetch('https://127.0.0.1:8000/api/produk/', {
-        return fetch('https://dj-maestro.herokuapp.com/api/produk/', {
+        // return fetch('https://dj-maestro.herokuapp.com/api/produk/', {
+        return fetch(`${usePath}/produk/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -40,7 +46,8 @@ export default class API {
 
     static tambahProduk(body, token) {
         // return fetch(`https://127.0.0.1:8000/api/produk/`, {
-        return fetch(`https://dj-maestro.herokuapp.com/api/produk/`, {
+        // return fetch(`https://dj-maestro.herokuapp.com/api/produk/`, {
+        return fetch(`${usePath}/produk/`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -51,8 +58,9 @@ export default class API {
     };
 
     static hapusProduk(id_produk, token) {
-        // return fetch(`https://127.0.0.1:8000/api/produk/${id_produk}`, {
-        return fetch(`https://dj-maestro.herokuapp.com/api/produk/${id_produk}`, {
+        // return fetch(`https://127.0.0.1:8000/api/produk/${id_produk}/`, {
+        // return fetch(`https://dj-maestro.herokuapp.com/api/produk/${id_produk}/`, {
+        return fetch(`${usePath}/produk/${id_produk}/`, {
             method: 'DELETE',
             headers: {
             'Content-Type': 'application/json',
@@ -63,7 +71,8 @@ export default class API {
 
     static ubahProduk(id_produk, body, token) {
         // return fetch(`https://127.0.0.1:8000/api/produk/${id_produk}/`, {
-        return fetch(`https://dj-maestro.herokuapp.com/api/produk/${id_produk}/`, {
+        // return fetch(`https://dj-maestro.herokuapp.com/api/produk/${id_produk}/`, {
+        return fetch(`${usePath}/produk/${id_produk}/`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -76,7 +85,8 @@ export default class API {
     // PELATIH
     static daftarPelatih(token) {
         // return fetch('https://127.0.0.1:8000/api/pelatih/', {
-        return fetch('https://dj-maestro.herokuapp.com/api/pelatih/', {
+        // return fetch('https://dj-maestro.herokuapp.com/api/pelatih/', {
+        return fetch(`${usePath}/pelatih/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -87,7 +97,8 @@ export default class API {
 
     static tambahPelatih(body, token) {
         // return fetch(`https://127.0.0.1:8000/api/pelatih/`, {
-        return fetch(`https://dj-maestro.herokuapp.com/api/pelatih/`, {
+        // return fetch(`https://dj-maestro.herokuapp.com/api/pelatih/`, {
+        return fetch(`${usePath}/pelatih/`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -98,8 +109,9 @@ export default class API {
     };
 
     static hapusPelatih(id_pelatih, token) {
-        // return fetch(`https://127.0.0.1:8000/api/pelatih/${id_pelatih}`, {
-        return fetch(`https://dj-maestro.herokuapp.com/api/pelatih/${id_pelatih}`, {
+        // return fetch(`https://127.0.0.1:8000/api/pelatih/${id_pelatih}/`, {
+        // return fetch(`https://dj-maestro.herokuapp.com/api/pelatih/${id_pelatih}/`, {
+        return fetch(`${usePath}/pelatih/${id_pelatih}/`, {
             method: 'DELETE',
             headers: {
             'Content-Type': 'application/json',
@@ -110,7 +122,8 @@ export default class API {
 
     static ubahPelatih(id_pelatih, body, token) {
         // return fetch(`https://127.0.0.1:8000/api/pelatih/${id_pelatih}/`, {
-        return fetch(`https://dj-maestro.herokuapp.com/api/pelatih/${id_pelatih}/`, {
+        // return fetch(`https://dj-maestro.herokuapp.com/api/pelatih/${id_pelatih}/`, {
+        return fetch(`${usePath}/pelatih/${id_pelatih}/`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -123,7 +136,8 @@ export default class API {
     // SISWA
     static daftarSiswa(token) {
         // return fetch('https://127.0.0.1:8000/api/siswa/', {
-        return fetch('https://dj-maestro.herokuapp.com/api/siswa/', {
+        // return fetch('https://dj-maestro.herokuapp.com/api/siswa/', {
+        return fetch(`${usePath}/siswa/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -134,7 +148,8 @@ export default class API {
 
     static tambahSiswa(body, token) {
         // return fetch(`https://127.0.0.1:8000/api/siswa/`, {
-        return fetch(`https://dj-maestro.herokuapp.com/api/siswa/`, {
+        // return fetch(`https://dj-maestro.herokuapp.com/api/siswa/`, {
+        return fetch(`${usePath}/siswa/`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -145,8 +160,9 @@ export default class API {
     };
 
     static hapusSiswa(id_siswa, token) {
-        // return fetch(`https://127.0.0.1:8000/api/siswa/${id_siswa}`, {
-        return fetch(`https://dj-maestro.herokuapp.com/api/siswa/${id_siswa}`, {
+        // return fetch(`https://127.0.0.1:8000/api/siswa/${id_siswa}/`, {
+        // return fetch(`https://dj-maestro.herokuapp.com/api/siswa/${id_siswa}/`, {
+        return fetch(`${usePath}/siswa/${id_siswa}/`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
@@ -157,7 +173,8 @@ export default class API {
 
     static ubahSiswa(id_siswa, body, token) {
         // return fetch(`https://127.0.0.1:8000/api/siswa/${id_siswa}/`, {
-        return fetch(`https://dj-maestro.herokuapp.com/api/siswa/${id_siswa}/`, {
+        // return fetch(`https://dj-maestro.herokuapp.com/api/siswa/${id_siswa}/`, {
+        return fetch(`${usePath}/siswa/${id_siswa}/`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -170,7 +187,8 @@ export default class API {
     // PESANAN
     static daftarPesanan(token) {
         // return fetch('https://127.0.0.1:8000/api/pesanan/', {
-        return fetch('https://dj-maestro.herokuapp.com/api/pesanan/', {
+        // return fetch('https://dj-maestro.herokuapp.com/api/pesanan/', {
+          return fetch(`${usePath}/pesanan/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -181,7 +199,8 @@ export default class API {
 
     static tambahPesanan(body, token) {
         // return fetch(`https://127.0.0.1:8000/api/pesanan/`, {
-        return fetch(`https://dj-maestro.herokuapp.com/api/pesanan/`, {
+        // return fetch(`https://dj-maestro.herokuapp.com/api/pesanan/`, {
+        return fetch(`${usePath}/pesanan/`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -192,8 +211,9 @@ export default class API {
     };
 
     static hapusPesanan(id_pesanan, token) {
-        // return fetch(`https://127.0.0.1:8000/api/pesanan/${id_pesanan}`, {
-        return fetch(`https://dj-maestro.herokuapp.com/api/pesanan/${id_pesanan}`, {
+        // return fetch(`https://127.0.0.1:8000/api/pesanan/${id_pesanan}/`, {
+        // return fetch(`https://dj-maestro.herokuapp.com/api/pesanan/${id_pesanan}/`, {
+        return fetch(`${usePath}/pesanan/${id_pesanan}/`, {
             method: 'DELETE',
             headers: {
             'Content-Type': 'application/json',
@@ -204,7 +224,8 @@ export default class API {
 
     static ubahPesanan(id_pesanan, body, token) {
         // return fetch(`https://127.0.0.1:8000/api/pesanan/${id_pesanan}/`, {
-        return fetch(`https://dj-maestro.herokuapp.com/api/pesanan/${id_pesanan}/`, {
+        // return fetch(`https://dj-maestro.herokuapp.com/api/pesanan/${id_pesanan}/`, {
+        return fetch(`${usePath}/pesanan/${id_pesanan}/`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -215,8 +236,8 @@ export default class API {
     };
 
     static loginUser(body) {
-        // return fetch(`https://127.0.0.1:8000/auth/`, {
-        return fetch(`https://dj-maestro.herokuapp.com/auth/`, {
+        return fetch(`http://127.0.0.1:8000/auth/`, {
+        // return fetch(`https://dj-maestro.herokuapp.com/auth/`,
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
