@@ -271,13 +271,6 @@ function PesananAdmin(props) {
       hidden: munculArsip
     },
     {
-      dataField: 'nama_pelatih',
-      text: 'Nama Pelatih',
-      sort: true,
-      filter: textFilter({placeholder:'Semua'}),
-      formatter: formatPelatih
-    },
-    {
       dataField: 'nama_siswa',
       text: 'Nama Siswa',
       sort: true,
@@ -318,7 +311,6 @@ function PesananAdmin(props) {
     container.kode = pesanan.__str__
     container.arsip = pesanan.arsip
     container.status_habis = pesanan.status_habis
-    container.nama_pelatih = pesanan.nama_pelatih
     container.nama_siswa = pesanan.nama_siswa
     container.nama_produk = pesanan.nama_produk
     container.nilai_transaksi = {x:pesanan.nilai_transaksi, y:pesanan.diskon}
