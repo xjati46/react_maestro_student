@@ -1,7 +1,7 @@
 // const TOKEN = 'fb5ec5875f75a4cb52f2a523a2f3be5c4451421d'
-const devPath = 'http://127.0.0.1:8000/api';
-// const buildPath = 'https://dj-maestro.herokuapp.com/api';
-const usePath = devPath
+// const devPath = 'http://127.0.0.1:8000/api';
+const buildPath = 'https://dj-maestro.herokuapp.com/api';
+const usePath = buildPath
 
 export default class API {
 
@@ -97,7 +97,7 @@ export default class API {
     };
 
     static loginUser(body) {
-        return fetch(`http://127.0.0.1:8000/auth/`, {
+        return fetch(`https://dj-maestro.herokuapp.com/auth/`, {
         // return fetch(`https://dj-maestro.herokuapp.com/auth/`,
             method: 'POST',
             headers: {
