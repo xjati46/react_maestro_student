@@ -1,14 +1,11 @@
-// const TOKEN = 'fb5ec5875f75a4cb52f2a523a2f3be5c4451421d'
-// const devPath = 'http://127.0.0.1:8000/api';
-const buildPath = 'https://dj-maestro.herokuapp.com/api';
-const usePath = buildPath
+const devPath = 'http://127.0.0.1:8000/api';
+// const buildPath = 'https://dj-maestro.herokuapp.com/api';
+const usePath = devPath
 
 export default class API {
 
     // BERITA
     static updateBerita(token) {
-        // return fetch('https://127.0.0.1:8000/api/berita/', {
-        // return fetch('https://dj-maestro.herokuapp.com/api/berita/', {
         return fetch(`${usePath}/berita/`, {
             method: 'GET',
             headers: {
@@ -20,8 +17,6 @@ export default class API {
 
     // USER
     static daftarUser(token) {
-        // return fetch('https://127.0.0.1:8000/api/users/', {
-        // return fetch('https://dj-maestro.herokuapp.com/api/users/', {
         return fetch(`${usePath}/users/`, {
             method: 'GET',
             headers: {
@@ -33,8 +28,6 @@ export default class API {
 
     // PRODUK
     static daftarProduk(token) {
-        // return fetch('https://127.0.0.1:8000/api/produk/', {
-        // return fetch('https://dj-maestro.herokuapp.com/api/produk/', {
         return fetch(`${usePath}/produk/`, {
             method: 'GET',
             headers: {
@@ -46,8 +39,6 @@ export default class API {
 
     // PELATIH
     static daftarPelatih(token) {
-        // return fetch('https://127.0.0.1:8000/api/pelatih/', {
-        // return fetch('https://dj-maestro.herokuapp.com/api/pelatih/', {
         return fetch(`${usePath}/pelatih/`, {
             method: 'GET',
             headers: {
@@ -59,8 +50,6 @@ export default class API {
 
     // SISWA
     static daftarSiswa(token) {
-        // return fetch('https://127.0.0.1:8000/api/siswa/', {
-        // return fetch('https://dj-maestro.herokuapp.com/api/siswa/', {
         return fetch(`${usePath}/siswa/`, {
             method: 'GET',
             headers: {
@@ -70,10 +59,19 @@ export default class API {
             })
     };
 
+    static tambahSiswa(body, token) {
+        return fetch(`${usePath}/siswa/`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Token ${token}`
+            },
+            body: JSON.stringify(body)
+          }).then( resp => resp.json())
+    };
+
     // PESANAN
     static daftarPesanan(token) {
-        // return fetch('https://127.0.0.1:8000/api/pesanan/', {
-        // return fetch('https://dj-maestro.herokuapp.com/api/pesanan/', {
           return fetch(`${usePath}/pesanan/`, {
             method: 'GET',
             headers: {
@@ -84,8 +82,6 @@ export default class API {
     };
 
     static ubahPesanan(id_pesanan, body, token) {
-        // return fetch(`https://127.0.0.1:8000/api/pesanan/${id_pesanan}/`, {
-        // return fetch(`https://dj-maestro.herokuapp.com/api/pesanan/${id_pesanan}/`, {
         return fetch(`${usePath}/pesanan/${id_pesanan}/`, {
             method: 'PUT',
             headers: {
@@ -97,8 +93,8 @@ export default class API {
     };
 
     static loginUser(body) {
-        return fetch(`https://dj-maestro.herokuapp.com/auth/`, {
-        // return fetch(`https://dj-maestro.herokuapp.com/auth/`,
+        return fetch(`http://127.0.0.1:8000/auth/`, {
+        // return fetch(`https://dj-maestro.herokuapp.com/auth/`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -107,13 +103,13 @@ export default class API {
           }).then( resp => resp.json())
     };
    
-    // static registerUser(body) {
-    //     return fetch(`httpss://127.0.0.1:8000/api/users/`, {
-    //         method: 'POST',
-    //         headers: {
-    //           'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(body)
-    //       }).then( resp => resp.json())
-    // };
+    static registerUser(body) {
+        return fetch(`http://127.0.0.1:8000/api/users/`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body)
+          }).then( resp => resp.json())
+    };
 }

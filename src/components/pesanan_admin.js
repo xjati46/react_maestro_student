@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Row, Col, Form, Table, Button, Modal } from 'react-bootstrap';
 import '../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faCheck, faCalendarMinus } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faCalendarMinus } from '@fortawesome/free-solid-svg-icons';
 import NumberFormat from 'react-number-format';
 import API from '../api_service';
 import moment from 'moment';
@@ -19,9 +19,6 @@ function PesananAdmin(props) {
   /// STATE
   const [modalUbah, setModalUbah] = useState(false);
   const [pilihPesananDiubah, setPilihPesananDiubah] = useState({});
-
-  const [munculTanggal, setMunculTanggal] = useState(true);
-  const [munculArsip, setMunculArsip] = useState(false);
   
   const [siswa, setSiswa] = useState('');
   const [pelatih, setPelatih] = useState('');
@@ -48,13 +45,6 @@ function PesananAdmin(props) {
   const [p8c, setP8c] = useState(false);
 
   const [token] = useCookies(['msms-cookie']);
-
-  /// EVENT HANDLER
-  
-  const klikUbahPesanan = pesanan => {
-    setPilihPesananDiubah(pesanan);
-    setModalUbah(true);
-  };
 
 // API CALLS
   
@@ -135,39 +125,10 @@ function PesananAdmin(props) {
     true: 'PASIF',
   }
 
-  const opsiHabis = {
-    false: 'AKTIF',
-    true: 'HABIS',
-  }
-
-  const handlerMunculTanggal = () => {
-    if(munculTanggal === false){
-      return setMunculTanggal(true)
-    } else {
-      return setMunculTanggal(false)
-    }
-  }
-
-  const handlerMunculArsip = () => {
-    if(munculArsip === false){
-      return setMunculArsip(true)
-    } else {
-      return setMunculArsip(false)
-    }
-  }
-
   // DATA FORMAT
   const formatStatus = cell => {
     if(cell === true){
       return <strong className="text-danger">PASIF</strong>
-    } else {
-      return <strong className="text-success">AKTIF</strong>
-    }
-  }
-
-  const formatHabis = cell => {
-    if(cell === true){
-      return <strong className="text-danger">HABIS</strong>
     } else {
       return <strong className="text-success">AKTIF</strong>
     }
@@ -190,7 +151,7 @@ function PesananAdmin(props) {
         <div>
           {moment(cell.x).format('LL')}
           <br/>
-          {cell.z ? <strong className="text-danger">{moment(cell.y).format('LL')}</strong> : <span>{moment(cell.y).format('LL')}</span>}
+          {cell.z ? <strong className="text-danger">{moment(cell.y).format('LL')} <br/> HABIS </strong> : <span>{moment(cell.y).format('LL')}</span>}
         </div>
       )
   }
@@ -198,14 +159,6 @@ function PesananAdmin(props) {
   const formatPelatih = cell => {
     if(cell){
       return 'Coach ' + cell
-    } else {
-      return 'deleted account'
-    }
-  }
-
-  const formatSiswa = cell => {
-    if(cell){
-      return cell
     } else {
       return 'deleted account'
     }
@@ -250,32 +203,11 @@ function PesananAdmin(props) {
       text: 'Kode Pesanan',
     },
     {
-      dataField: 'arsip',
-      text: 'Status Latihan',
-      sort: true,
-      formatter: formatStatus,
-      filter: selectFilter({
-        options: opsiArsip,
-        defaultValue: 'false'
-      }),
-      hidden: munculArsip
-    },
-    {
-      dataField: 'status_habis',
-      text: 'Status Habis',
-      sort: true,
-      formatter: formatHabis,
-      filter: selectFilter({
-        options: opsiHabis,
-      }),
-      hidden: munculArsip
-    },
-    {
-      dataField: 'nama_siswa',
-      text: 'Nama Siswa',
+      dataField: 'nama_pelatih',
+      text: 'Nama Pelatih',
       sort: true,
       filter: textFilter({placeholder:'Semua'}),
-      formatter: formatSiswa
+      formatter: formatPelatih
     },
     {
       dataField: 'nama_produk',
@@ -297,11 +229,16 @@ function PesananAdmin(props) {
       dataField: 'tanggal_latihan',
       text: 'Tanggal Latihan',
       formatter: formatTanggalLatihan,
-      hidden: munculTanggal
     },
     {
-      dataField: 'aksi',
-      text: 'Aksi',
+      dataField: 'arsip',
+      text: 'Status Latihan',
+      sort: true,
+      formatter: formatStatus,
+      filter: selectFilter({
+        options: opsiArsip,
+        defaultValue: 'false'
+      }),
     },
   ]
 
@@ -309,20 +246,12 @@ function PesananAdmin(props) {
   const daftarPesanan = props.pesanan.map(pesanan => {
     const container = {}
     container.kode = pesanan.__str__
-    container.arsip = pesanan.arsip
-    container.status_habis = pesanan.status_habis
-    container.nama_siswa = pesanan.nama_siswa
+    container.nama_pelatih = pesanan.nama_pelatih
     container.nama_produk = pesanan.nama_produk
     container.nilai_transaksi = {x:pesanan.nilai_transaksi, y:pesanan.diskon}
     container.masa_latihan = {x:pesanan.tgl_transaksi, y:pesanan.tgl_habis, z:pesanan.status_habis}
     container.tanggal_latihan = pesanan
-    container.aksi = <div>
-      <FontAwesomeIcon
-        icon={faEdit}
-        onClick={() => klikUbahPesanan(pesanan)}
-        title='Ubah Pesanan'
-      /> 
-    </div>
+    container.arsip = pesanan.arsip
 
     return container
   })
@@ -340,30 +269,6 @@ function PesananAdmin(props) {
 
   return (
     <div>
-      <Row className="mb-2">
-        <Col xs={2}>
-        </Col>
-
-        <Col>
-        </Col>
-        
-        <Col xs={2}>
-          <Form.Check 
-            type="switch"
-            id="arsip-switch"
-            onChange={handlerMunculArsip}
-            label="Status"
-            checked={munculArsip ? false : true}
-          />
-          <Form.Check 
-            type="switch"
-            id="tanggal-latihan-switch"
-            onChange={handlerMunculTanggal}
-            label="Tanggal Latihan"
-            checked={munculTanggal ? false : true}
-          />
-        </Col>
-      </Row>
       
       <BootstrapTable
         bootstrap4

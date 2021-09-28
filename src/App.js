@@ -68,8 +68,8 @@ function App() {
 // EVENT HANDLER
   const filterPesanan = pesanan => {
     const userId = state.userId.toString()
-    if(userId && pesanan.arsip === false) {
-        return pesanan.id_user === userId
+    if(userId) {
+        return pesanan.id_siswa === userId
     }
   }
 

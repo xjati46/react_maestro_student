@@ -142,3 +142,15 @@ div.sidebar {
   padding: 15px;
   margin: auto;
 }
+
+.link-registrasi {
+  margin-top: 15px;
+  cursor: pointer;
+  color: grey;
+  font-size: 18px;
+}
+
+.link-registrasi:hover {
+  font-weight: bold;
+  color: black;
+}
